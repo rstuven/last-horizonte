@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Security.Authentication;
+using System.Threading;
 using System.Windows.Forms;
 using LastHorizonte.Core;
 
@@ -27,6 +28,18 @@ namespace LastHorizonte
 		[STAThread]
 		static void Main()
 		{
+
+			bool createdNew;
+			var mutex = new Mutex(false, Application.ProductName + "/Instance", out createdNew);
+			if (!createdNew)
+			{
+				MessageBox.Show("La aplicación ya está abierta.", 
+					Application.ProductName,
+				    MessageBoxButtons.OK, 
+					MessageBoxIcon.Exclamation);
+				return;
+			}
+
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(true);
 
@@ -55,7 +68,7 @@ namespace LastHorizonte
 				};
 
 			Configuration = Configuration.Load(ConfigurationFilename);
-			
+
 			CreateHorizonteScrobbler(optionsForm);
 
 			InitializeAndStartScrobbler(optionsForm, Configuration);
