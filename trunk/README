@@ -1,0 +1,10 @@
+Last.Horizonte
+--------------
+
+Last.Horizonte es un utilitario que permite agregar a tu perfil de Last.fm 
+la música que estás escuchando en Radio Horizonte (Chile).
+
+Ver:
+http://code.google.com/p/last-horizonte/
+http;//www.horizonte.cl/
+http://www.last.fm/
