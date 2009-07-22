@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LastHorizonte.Core", "LastHorizonte.Core\LastHorizonte.Core.csproj", "{572B6D9F-3FAC-492F-8F8A-C204CAD77889}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LastHorizonte.App", "LastHorizonte.App\LastHorizonte.App.csproj", "{D8497AC8-663B-482A-9588-6E06CF4EEE16}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{572B6D9F-3FAC-492F-8F8A-C204CAD77889}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{572B6D9F-3FAC-492F-8F8A-C204CAD77889}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{572B6D9F-3FAC-492F-8F8A-C204CAD77889}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{572B6D9F-3FAC-492F-8F8A-C204CAD77889}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8497AC8-663B-482A-9588-6E06CF4EEE16}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8497AC8-663B-482A-9588-6E06CF4EEE16}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8497AC8-663B-482A-9588-6E06CF4EEE16}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8497AC8-663B-482A-9588-6E06CF4EEE16}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
