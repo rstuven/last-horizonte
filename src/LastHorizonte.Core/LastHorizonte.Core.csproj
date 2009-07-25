@@ -47,7 +47,7 @@
     </Compile>
     <Compile Include="Configuration.cs" />
     <Compile Include="HorizonteScrobbler.cs" />
-    <Compile Include="HorizonteTrack.cs" />
+    <Compile Include="Track.cs" />
     <Compile Include="MsnMessenger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

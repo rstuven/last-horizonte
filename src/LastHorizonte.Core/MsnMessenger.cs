@@ -6,13 +6,13 @@ namespace LastHorizonte
 {
 	internal static class MsnMessenger
 	{
-		public static void UpdateMusic(HorizonteTrack track)
+		public static void UpdateMusic(Track track)
 		{
 			string title = null;
 			string artist = null;
 			const string album = "Radio Horizonte";
 
-			var enable = track != null && track.IsPlaying;
+			var enable = track != null && track.Status == TrackStatus.Playing;
 			if (enable)
 			{
 				title = track.Title;

@@ -139,22 +139,23 @@ namespace LastHorizonte
 				var track = eventargs.Track;
 				if (eventargs.IsFirstTime)
 				{
-					if (track.IsError)
+					if (track.Status == TrackStatus.Error)
 					{
 						notifyIcon.ShowBalloonTip(0, Application.ProductName, track.Title, ToolTipIcon.Error);
-						SetNotifyIconText("{0}: {1}", track.Status, track.Title);
+						SetNotifyIconText("{0}: {1}", "Error", track.Title);
 					}
-					else if (track.IsEmpty)
+					else if (track.Status == TrackStatus.None)
 					{
 						SetNotifyIconText("{0} esperando a que suene la mejor música...", Application.ProductName);
 					}
 					else
 					{
+						var status = (track.Status == TrackStatus.Coming ? "Luego en" : "En") + " Horizonte";
 						if (Configuration.NotifySystemTray)
 						{
-							notifyIcon.ShowBalloonTip(0, track.Status, track.ToString(), ToolTipIcon.Info);
+							notifyIcon.ShowBalloonTip(0, status, track.ToString(), ToolTipIcon.Info);
 						}
-						SetNotifyIconText("{0}: {1}", track.Status, track.ToString());
+						SetNotifyIconText("{0}: {1}", status, track.ToString());
 					}
 				}
 			});
