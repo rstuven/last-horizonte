@@ -42,7 +42,7 @@ move last-horizonte-%VERSION%-update.zip    "%DEPLOY%"
 
 echo ^<VersionConfig^>^<AvailableVersion^>%VERSION%^</AvailableVersion^>          > "%DEPLOY%UpdateVersion.xml"
 echo ^<AppFileUrl^>%DOWNLOADS%last-horizonte-%VERSION%-update.zip^</AppFileUrl^> >> "%DEPLOY%UpdateVersion.xml"
-type UpdateVersion_template.xml                                                  >> "%DEPLOY%UpdateVersion.xml"
+type UpdateVersion.template.xml                                                  >> "%DEPLOY%UpdateVersion.xml"
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :end
