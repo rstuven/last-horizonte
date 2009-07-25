@@ -125,7 +125,7 @@
 			this.linkLabel3.Size = new System.Drawing.Size(325, 23);
 			this.linkLabel3.TabIndex = 8;
 			this.linkLabel3.TabStop = true;
-			this.linkLabel3.Text = "http://code.google.com/p/last-horizonte/";
+			this.linkLabel3.Text = "http://last-horizonte.googlecode.com/";
 			this.linkLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.linkLabel3.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel3_LinkClicked);
 			// 

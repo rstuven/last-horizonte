@@ -11,6 +11,7 @@ namespace LastHorizonte.Core
 		public string Password { get; set; }
 		public bool RememberPassword { get; set; }
 		public bool StartActivated { get; set; }
+		public bool StartOnWindowsSession { get; set; }
 		public bool NotifyLastFm { get; set; }
 		public bool NotifySystemTray { get; set; }
 		public bool NotifyMsnMessenger { get; set; }
@@ -37,6 +38,7 @@ namespace LastHorizonte.Core
 		{
 			RememberPassword = true;
 			StartActivated = true;
+			StartOnWindowsSession = true;
 			NotifyLastFm = true;
 			NotifyMsnMessenger = true;
 			NotifySystemTray = true;

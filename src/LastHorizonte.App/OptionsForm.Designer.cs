@@ -53,6 +53,7 @@
 			this.cancelButton = new System.Windows.Forms.Button();
 			this.activatedCheckBox = new System.Windows.Forms.CheckBox();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+			this.startOnWindowsSessionCheckBox = new System.Windows.Forms.CheckBox();
 			groupBox1 = new System.Windows.Forms.GroupBox();
 			label2 = new System.Windows.Forms.Label();
 			label1 = new System.Windows.Forms.Label();
@@ -174,10 +175,11 @@
 			// 
 			groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
+			groupBox3.Controls.Add(this.startOnWindowsSessionCheckBox);
 			groupBox3.Controls.Add(this.startActivatedCheckBox);
 			groupBox3.Location = new System.Drawing.Point(13, 384);
 			groupBox3.Name = "groupBox3";
-			groupBox3.Size = new System.Drawing.Size(324, 49);
+			groupBox3.Size = new System.Drawing.Size(324, 72);
 			groupBox3.TabIndex = 2;
 			groupBox3.TabStop = false;
 			groupBox3.Text = "Inicio";
@@ -202,7 +204,7 @@
             this.toolStripSeparator1,
             this.exitToolStripMenuItem});
 			this.contextMenuStrip.Name = "contextMenuStrip";
-			this.contextMenuStrip.Size = new System.Drawing.Size(179, 142);
+			this.contextMenuStrip.Size = new System.Drawing.Size(179, 120);
 			this.contextMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip_Opening);
 			// 
 			// activatedToolStripMenuItem
@@ -249,7 +251,7 @@
 			// acceptButton
 			// 
 			this.acceptButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.acceptButton.Location = new System.Drawing.Point(180, 445);
+			this.acceptButton.Location = new System.Drawing.Point(180, 467);
 			this.acceptButton.Name = "acceptButton";
 			this.acceptButton.Size = new System.Drawing.Size(77, 28);
 			this.acceptButton.TabIndex = 4;
@@ -261,7 +263,7 @@
 			// 
 			this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.cancelButton.Location = new System.Drawing.Point(263, 445);
+			this.cancelButton.Location = new System.Drawing.Point(263, 467);
 			this.cancelButton.Name = "cancelButton";
 			this.cancelButton.Size = new System.Drawing.Size(74, 28);
 			this.cancelButton.TabIndex = 5;
@@ -273,7 +275,7 @@
 			// 
 			this.activatedCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.activatedCheckBox.AutoSize = true;
-			this.activatedCheckBox.Location = new System.Drawing.Point(14, 449);
+			this.activatedCheckBox.Location = new System.Drawing.Point(14, 471);
 			this.activatedCheckBox.Name = "activatedCheckBox";
 			this.activatedCheckBox.Size = new System.Drawing.Size(120, 17);
 			this.activatedCheckBox.TabIndex = 3;
@@ -284,6 +286,16 @@
 			// 
 			this.errorProvider.ContainerControl = this;
 			// 
+			// startOnWindowsSessionCheckBox
+			// 
+			this.startOnWindowsSessionCheckBox.AutoSize = true;
+			this.startOnWindowsSessionCheckBox.Location = new System.Drawing.Point(20, 43);
+			this.startOnWindowsSessionCheckBox.Name = "startOnWindowsSessionCheckBox";
+			this.startOnWindowsSessionCheckBox.Size = new System.Drawing.Size(265, 17);
+			this.startOnWindowsSessionCheckBox.TabIndex = 1;
+			this.startOnWindowsSessionCheckBox.Text = "Iniciar automáticamente con la sesión de Windows";
+			this.startOnWindowsSessionCheckBox.UseVisualStyleBackColor = true;
+			// 
 			// OptionsForm
 			// 
 			this.AcceptButton = this.acceptButton;
@@ -292,7 +304,7 @@
 			this.BackgroundImage = global::LastHorizonte.Properties.Resources.splash;
 			this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
 			this.CancelButton = this.cancelButton;
-			this.ClientSize = new System.Drawing.Size(349, 482);
+			this.ClientSize = new System.Drawing.Size(349, 504);
 			this.Controls.Add(groupBox1);
 			this.Controls.Add(groupBox3);
 			this.Controls.Add(groupBox2);
@@ -339,5 +351,6 @@
 		private System.Windows.Forms.ErrorProvider errorProvider;
 		private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem openProfileToolStripMenuItem;
+		private System.Windows.Forms.CheckBox startOnWindowsSessionCheckBox;
 	}
 }

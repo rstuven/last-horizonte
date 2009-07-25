@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LastHorizonte.Core", "LastH
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LastHorizonte.App", "LastHorizonte.App\LastHorizonte.App.csproj", "{D8497AC8-663B-482A-9588-6E06CF4EEE16}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LastHorizonte.Launcher", "LastHorizonte.Launcher\LastHorizonte.Launcher.csproj", "{D0E3405F-5526-4EA7-951C-F36C88456A65}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{D8497AC8-663B-482A-9588-6E06CF4EEE16}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8497AC8-663B-482A-9588-6E06CF4EEE16}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D8497AC8-663B-482A-9588-6E06CF4EEE16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0E3405F-5526-4EA7-951C-F36C88456A65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0E3405F-5526-4EA7-951C-F36C88456A65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0E3405F-5526-4EA7-951C-F36C88456A65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0E3405F-5526-4EA7-951C-F36C88456A65}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
