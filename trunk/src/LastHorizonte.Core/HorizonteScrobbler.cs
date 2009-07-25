@@ -100,9 +100,9 @@ namespace LastHorizonte.Core
 			InvokeStarted(null);
 			Trace.WriteLine("Started");
 
-			HorizonteTrack lastPlayedTrack = null;
-			HorizonteTrack lastScrobbledTrack = null;
-			HorizonteTrack lastTrack = null;
+			Track lastPlayedTrack = null;
+			Track lastScrobbledTrack = null;
+			Track lastTrack = null;
 			var lastPlayedTrackStarted = DateTime.Now;
 			var cycles = 0;
 
@@ -136,7 +136,7 @@ namespace LastHorizonte.Core
 						}
 						lastPlayedTrackStarted = DateTime.Now;
 					}
-					if (track.IsPlaying)
+					if (track.Status == TrackStatus.Playing)
 					{
 						var duration = DateTime.Now - lastPlayedTrackStarted;
 						NotifyMsnMessenger(track);
@@ -168,7 +168,7 @@ namespace LastHorizonte.Core
 			Trace.WriteLine("Stopped");
 		}
 
-		private void NotifyMsnMessenger(HorizonteTrack track)
+		private void NotifyMsnMessenger(Track track)
 		{
 			if (configuration != null && configuration.IsWindows)
 			{
@@ -201,7 +201,7 @@ namespace LastHorizonte.Core
 			return new ScrobbleManager(connection);
 		}
 
-		private static HorizonteTrack GetCurrentTrack(string feedUrl)
+		private static Track GetCurrentTrack(string feedUrl)
 		{
 			try
 			{
@@ -217,20 +217,20 @@ namespace LastHorizonte.Core
 						var xmlDocument = new XmlDocument();
 						xmlDocument.LoadXml(feed);
 						var track = xmlDocument.SelectSingleNode("//cancion");
-						return new HorizonteTrack
+						return new Track
 						{
 							Artist = GetTrackProperty(track, "grupo"),
 							Title = GetTrackProperty(track, "titulo"),
-							Status = GetTrackProperty(track, "estado")
+							Status = GetTrackStatus(track, "estado")
 						};
 					}
 				}
 			}
 			catch (Exception ex)
 			{
-				return new HorizonteTrack
+				return new Track
 				{
-					Status = "Error",
+					Status = TrackStatus.Error,
 					Title = ex.Message
 				};
 			}
@@ -251,6 +251,20 @@ namespace LastHorizonte.Core
 		private static string GetTrackProperty(XmlNode node, string name)
 		{
 			return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(node.SelectSingleNode(name).InnerText.Trim().ToLower());
+		}
+
+		private static TrackStatus GetTrackStatus(XmlNode node, string name)
+		{
+			var status = node.SelectSingleNode(name).InnerText.Trim().ToLower();
+			if (status == "en horizonte")
+			{
+				return TrackStatus.Playing;
+			}
+			if (status == "luego en horizonte")
+			{
+				return TrackStatus.Coming;
+			}
+			return TrackStatus.None;
 		}
 
 		private static string GetFeedUrl()
@@ -316,14 +330,14 @@ namespace LastHorizonte.Core
 
 	public class ScrobbledEventArgs
 	{
-		public HorizonteTrack Track { get; set; }
+		public Track Track { get; set; }
 	}
 
 	public delegate void PlayingEventHandler(object sender, PlayingEventArgs eventArgs);
 
 	public class PlayingEventArgs
 	{
-		public HorizonteTrack Track { get; set; }
+		public Track Track { get; set; }
 		public bool IsFirstTime { get; set; }
 	}
 }
