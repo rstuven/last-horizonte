@@ -5,15 +5,19 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{572B6D9F-3FAC-492F-8F8A-C204CAD77889}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{D0E3405F-5526-4EA7-951C-F36C88456A65}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LastHorizonte.Core</RootNamespace>
-    <AssemblyName>LastHorizonte.Core</AssemblyName>
+    <RootNamespace>LastHorizonte.Launcher</RootNamespace>
+    <AssemblyName>LastHorizonte</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <StartupObject>
+    </StartupObject>
     <TargetFrameworkSubset>
     </TargetFrameworkSubset>
+    <ApplicationIcon>lhlogo.ico</ApplicationIcon>
+    <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,26 +37,32 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="lastfm-sharp, Version=0.1.10.39897, Culture=neutral, PublicKeyToken=ac974b34236b3339, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\lastfm-sharp.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\SolutionVersion.cs">
-      <Link>SolutionVersion.cs</Link>
-    </Compile>
-    <Compile Include="Configuration.cs" />
-    <Compile Include="HorizonteScrobbler.cs" />
-    <Compile Include="HorizonteTrack.cs" />
-    <Compile Include="MsnMessenger.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <ProjectReference Include="..\LastHorizonte.App\LastHorizonte.App.csproj">
+      <Project>{D8497AC8-663B-482A-9588-6E06CF4EEE16}</Project>
+      <Name>LastHorizonte.App</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\AUTHORS.txt">
+      <Link>AUTHORS.txt</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\COPYING.txt">
+      <Link>COPYING.txt</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\README.txt">
+      <Link>README.txt</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="lhlogo.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -62,4 +72,9 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PostBuildEvent>del "$(TargetDir)LastHorizonte.App.dll"
+
+ren "$(TargetDir)LastHorizonte.App.exe" *.dll</PostBuildEvent>
+  </PropertyGroup>
 </Project>

@@ -82,6 +82,29 @@ namespace LastHorizonte
 			cfg.NotifyMsnMessenger = notifyMsnMessegerCheckBox.Checked;
 			cfg.NotifySystemTray = notifySystemTrayCheckBox.Checked;
 			cfg.StartActivated = startActivatedCheckBox.Checked;
+			cfg.StartOnWindowsSession = startOnWindowsSessionCheckBox.Checked;
+
+			if (cfg.IsWindows)
+			{
+				try
+				{
+					var key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run");
+					if (cfg.StartOnWindowsSession)
+					{
+						// Use app domain setup information to get launcher path
+						var domainSetup = AppDomain.CurrentDomain.SetupInformation;
+						key.SetValue(Application.ProductName, domainSetup.ApplicationBase + domainSetup.ApplicationName);
+					}
+					else
+					{
+						key.DeleteValue(Application.ProductName, false);
+					}
+				}
+				catch (Exception)
+				{
+					cfg.StartOnWindowsSession = false;
+				}
+			}
 
 			if (activatedCheckBox.Checked != Program.HorizonteScrobbler.IsStarted)
 			{
@@ -102,7 +125,7 @@ namespace LastHorizonte
 		{
 			Open();
 
-			errorProvider.SetError(usernameTextBox, "Ingrese un nombre usuario correcto");
+			errorProvider.SetError(usernameTextBox, "Ingrese un nombre de usuario correcto");
 			errorProvider.SetError(passwordTextBox, "Ingrese una contrasela correcta");
 
 			if (Program.Configuration.StartActivated)
@@ -138,6 +161,7 @@ namespace LastHorizonte
 			notifyMsnMessegerCheckBox.Enabled = cfg.IsWindows;
 			notifySystemTrayCheckBox.Checked = cfg.NotifySystemTray;
 			startActivatedCheckBox.Checked = cfg.StartActivated;
+			startOnWindowsSessionCheckBox.Checked = cfg.StartOnWindowsSession;
 			activatedCheckBox.Checked = Program.HorizonteScrobbler.IsStarted;
 		}
 

@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Net;
+using System.Reflection;
 using System.Security.Authentication;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -185,13 +186,18 @@ namespace LastHorizonte.Core
 
 		private static ScrobbleManager GetScrobbleManager(string username, string password)
 		{
+			if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+			{
+				throw new AuthenticationException();
+			}
+
 			const string API_KEY = "fe136e7517c55e3d9f7aa295c2b02a72";
 			const string API_SECRET = "433cdcd4e96914dbcd71f176654e3bb3";
 
 			var session = new Session(API_KEY, API_SECRET);
 			session.Authenticate(username, password);
 
-			var connection = new Connection("hzt", "1.0", username, session);
+			var connection = new Connection("hzt", Assembly.GetEntryAssembly().GetName().Version.ToString(), username, session);
 			return new ScrobbleManager(connection);
 		}
 
@@ -235,7 +241,10 @@ namespace LastHorizonte.Core
 		private static string CleanInvalidXml(string xml)
 		{
 			xml = CleanInvalidXmlRegex.Replace(xml, "");
-			xml = xml.Replace("&", "&amp;");
+			xml = xml
+				.Replace("&", "&amp;")
+				.Replace("´", "'")
+				;
 			return xml;
 		}
 

@@ -3,11 +3,12 @@ using System.IO;
 using System.Security.Authentication;
 using System.Threading;
 using System.Windows.Forms;
+using Conversive.AutoUpdater;
 using LastHorizonte.Core;
 
 namespace LastHorizonte
 {
-	static class Program
+	public static class Program
 	{
 		internal static readonly string ConfigurationFilename = Path.Combine(Application.UserAppDataPath, "config.xml");
 		public static Configuration Configuration;
@@ -26,22 +27,12 @@ namespace LastHorizonte
 		/// The main entry point for the application.
 		/// </summary>
 		[STAThread]
-		static void Main()
+		public static void Main()
 		{
-
-			bool createdNew;
-			var mutex = new Mutex(false, Application.ProductName + "/Instance", out createdNew);
-			if (!createdNew)
-			{
-				MessageBox.Show("La aplicación ya está abierta.", 
-					Application.ProductName,
-				    MessageBoxButtons.OK, 
-					MessageBoxIcon.Exclamation);
-				return;
-			}
-
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(true);
+
+			CheckUpdate(true);
 
 			var optionsForm = new OptionsForm();
 
@@ -81,6 +72,43 @@ namespace LastHorizonte
 
 			Application.Run();
 
+		}
+
+		internal static void CheckUpdate(bool checkSingleInstance)
+		{
+			var updater = new AutoUpdater();
+			updater.ConfigUrl = "http://last-horizonte.googlecode.com/files/UpdateVersion.xml?nocache=" + DateTime.UtcNow.ToString("yyyyMMddHHmmss");
+			updater.DownloadForm = new UpdateForm(updater);
+			updater.OnAutoUpdateComplete += delegate
+			{
+				Thread.Sleep(5000);
+				//Application.Restart();
+			};
+			updater.AutoRestart = true;
+
+			if (checkSingleInstance)
+			{
+				updater.OnConfigFileDownloaded += delegate
+				{
+					CheckSingleInstance();
+				};
+			}
+
+			updater.TryUpdate();
+		}
+
+		private static void CheckSingleInstance()
+		{
+			bool createdNew;
+			var mutex = new Mutex(true, Application.ProductName + "_Instance", out createdNew);
+			if (!createdNew)
+			{
+				MessageBox.Show("La aplicación ya está abierta.",
+				                Application.ProductName,
+				                MessageBoxButtons.OK,
+				                MessageBoxIcon.Exclamation);
+				Application.Exit();
+			}
 		}
 
 		internal static void InitializeAndStartScrobbler(OptionsForm optionsForm, Configuration configuration)
