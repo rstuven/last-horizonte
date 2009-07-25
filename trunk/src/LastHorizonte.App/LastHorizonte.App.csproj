@@ -113,8 +113,19 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-
-    <None Include="splash.png" />
+    <None Include="Images\splash.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\love.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\ban.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\options.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\information.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

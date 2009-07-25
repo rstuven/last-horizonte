@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Forms;
+using LastHorizonte.Core;
 
 namespace LastHorizonte
 {
@@ -50,6 +51,19 @@ namespace LastHorizonte
 		{
 			activatedToolStripMenuItem.Checked = Program.HorizonteScrobbler.IsStarted;
 			openProfileToolStripMenuItem.Enabled = Program.HorizonteScrobbler.IsInitialized;
+			var track = Program.HorizonteScrobbler.LastPlayedTrack;
+			if (track == null)
+			{
+				trackToolStripMenuItem.Visible = false;
+			}
+			else
+			{
+				var status = (track.Status == TrackStatus.Played ? "Sonó" : "Sonando");
+				trackToolStripMenuItem.Text = status + ": " + track.ToString();
+				trackToolStripMenuItem.Visible = true;
+			}
+			// Save in Tag property, as track can change in the meantime... 
+			trackToolStripMenuItem.Tag = track;
 		}
 
 		private bool accountChanged;
@@ -193,6 +207,24 @@ namespace LastHorizonte
 		private void openProfileToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			Process.Start("http://www.last.fm/user/" + Program.Configuration.Username);
+		}
+
+		private void trackLoveToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			var track = (Track)trackToolStripMenuItem.Tag;
+			Program.HorizonteScrobbler.Love(track);
+		}
+
+		private void trackBanToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			var track = (Track)trackToolStripMenuItem.Tag;
+			Program.HorizonteScrobbler.Ban(track);
+		}
+
+		private void trackPageToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			var track = (Track)trackToolStripMenuItem.Tag;
+			Process.Start(track.LastFmUrl());
 		}
 
 	}
