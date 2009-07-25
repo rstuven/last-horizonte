@@ -34,8 +34,26 @@ namespace LastHorizonte
 
 			CheckUpdate(true);
 
+			Configuration = Configuration.Load(ConfigurationFilename);
+
 			var optionsForm = new OptionsForm();
 
+			CreateNotifyIcon(optionsForm);
+			CreateHorizonteScrobbler(optionsForm);
+			InitializeAndStartScrobbler(optionsForm, Configuration);
+
+			Application.ApplicationExit += ((sender1, e) =>
+			{
+				notifyIcon.Visible = false;
+				horizonteScrobbler.Stop();
+			});
+
+			Application.Run();
+
+		}
+
+		private static void CreateNotifyIcon(OptionsForm optionsForm)
+		{
 			notifyIcon = new NotifyIcon
 			{
 				Icon = optionsForm.Icon,
@@ -57,21 +75,6 @@ namespace LastHorizonte
 						optionsForm.Open();
 					}
 				};
-
-			Configuration = Configuration.Load(ConfigurationFilename);
-
-			CreateHorizonteScrobbler(optionsForm);
-
-			InitializeAndStartScrobbler(optionsForm, Configuration);
-
-			Application.ApplicationExit += ((sender1, e) =>
-			{
-				notifyIcon.Visible = false;
-				horizonteScrobbler.Stop();
-			});
-
-			Application.Run();
-
 		}
 
 		internal static void CheckUpdate(bool checkSingleInstance)
@@ -158,6 +161,14 @@ namespace LastHorizonte
 						SetNotifyIconText("{0}: {1}", status, track.ToString());
 					}
 				}
+			});
+			horizonteScrobbler.Loved += ((sender, eventargs) => 
+			{
+				notifyIcon.ShowBalloonTip(0, "Favorito", eventargs.Track.ToString(), ToolTipIcon.Info);
+			});
+			horizonteScrobbler.Banned += ((sender, eventargs) => 
+			{
+				notifyIcon.ShowBalloonTip(0, "Vetado", eventargs.Track.ToString(), ToolTipIcon.Info);
 			});
 			horizonteScrobbler.Started += ((sender, eventargs) =>
 			{

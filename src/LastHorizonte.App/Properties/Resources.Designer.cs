@@ -60,6 +60,34 @@ namespace LastHorizonte.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap ban {
+            get {
+                object obj = ResourceManager.GetObject("ban", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap information {
+            get {
+                object obj = ResourceManager.GetObject("information", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap love {
+            get {
+                object obj = ResourceManager.GetObject("love", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap options {
+            get {
+                object obj = ResourceManager.GetObject("options", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap splash {
             get {
                 object obj = ResourceManager.GetObject("splash", resourceCulture);

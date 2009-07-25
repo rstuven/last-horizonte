@@ -7,7 +7,8 @@ namespace LastHorizonte.Core
 		None,
 		Playing,
 		Coming,
-		Error
+		Played,
+		Error,
 	}
 
 	public class Track : IEquatable<Track>
@@ -24,6 +25,18 @@ namespace LastHorizonte.Core
 		public override string ToString()
 		{
 			return Artist + " - " + Title;
+		}
+
+		public string LastFmUrl()
+		{
+			var artist = Artist.Replace(" ", "+");
+			var title = Title.Replace(" ", "+");
+			return String.Format("http://www.last.fm/music/{0}/_/{1}", artist, title);
+		}
+
+		public Lastfm.Services.Track ToLastfmTrack(Lastfm.Services.Session session)
+		{
+			return new Lastfm.Services.Track(Artist, Title, session);
 		}
 	}
 }

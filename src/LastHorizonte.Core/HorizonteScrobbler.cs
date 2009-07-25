@@ -18,8 +18,10 @@ namespace LastHorizonte.Core
 	{
 		private Configuration configuration;
 		private ScrobbleManager scrobbleManager;
+		private Session session;
 		private string feedUrl;
 		private readonly BackgroundWorker worker;
+		private Track lastPlayedTrack;
 
 		public bool IsStarted
 		{
@@ -29,6 +31,11 @@ namespace LastHorizonte.Core
 		public bool IsInitialized
 		{
 			get { return configuration != null; }
+		}
+
+		public Track LastPlayedTrack
+		{
+			get { return lastPlayedTrack; }
 		}
 
 		public HorizonteScrobbler()
@@ -43,7 +50,8 @@ namespace LastHorizonte.Core
 			Trace.WriteLine("Initializing...");
 			try
 			{
-				scrobbleManager = GetScrobbleManager(configuration.Username, configuration.Password);
+				session = GetSession(configuration);
+				scrobbleManager = GetScrobbleManager(configuration, session);
 			}
 			catch (Exception ex)
 			{
@@ -100,7 +108,7 @@ namespace LastHorizonte.Core
 			InvokeStarted(null);
 			Trace.WriteLine("Started");
 
-			Track lastPlayedTrack = null;
+			Track lastPlayingTrack = null;
 			Track lastScrobbledTrack = null;
 			Track lastTrack = null;
 			var lastPlayedTrackStarted = DateTime.Now;
@@ -112,27 +120,27 @@ namespace LastHorizonte.Core
 				{
 					cycles = 15; // 15 seconds approx.
 					var track = GetCurrentTrack(feedUrl);
-					var lastPlayedTrackHasChanged = (lastPlayedTrack != null && !lastPlayedTrack.Equals(track));
+					var lastPlayedTrackHasChanged = (lastPlayingTrack != null && !lastPlayingTrack.Equals(track));
 					var isFirstTime = (lastTrack == null || !lastTrack.Equals(track));
 
 					if (lastPlayedTrackHasChanged)
 					{
-						var newScrobbledTrack = (lastScrobbledTrack == null || !lastScrobbledTrack.Equals(lastPlayedTrack));
+						var newScrobbledTrack = (lastScrobbledTrack == null || !lastScrobbledTrack.Equals(lastPlayingTrack));
 						var duration = DateTime.Now - lastPlayedTrackStarted;
 						if (newScrobbledTrack && duration > new TimeSpan(0, 0, 0, 30))
 						{
 							var entry = new Entry(
-								lastPlayedTrack.Artist,
-								lastPlayedTrack.Title,
+								lastPlayingTrack.Artist,
+								lastPlayingTrack.Title,
 								lastPlayedTrackStarted,
 								PlaybackSource.NonPersonalizedBroadcast,
 								duration,
 								ScrobbleMode.Played
 								);
 							scrobbleManager.Queue(entry);
-							lastScrobbledTrack = lastPlayedTrack;
-							InvokeScrobbled(new ScrobbledEventArgs() {Track = lastPlayedTrack});
-							Trace.WriteLine(String.Format("Scrobbled: {0} ({1})", lastPlayedTrack, duration));
+							lastScrobbledTrack = lastPlayingTrack;
+							InvokeScrobbled(new TrackEventArgs() {Track = lastPlayingTrack});
+							Trace.WriteLine(String.Format("Scrobbled: {0} ({1})", lastPlayingTrack, duration));
 						}
 						lastPlayedTrackStarted = DateTime.Now;
 					}
@@ -146,12 +154,17 @@ namespace LastHorizonte.Core
 							scrobbleManager.ReportNowplaying(nowplayingTrack);
 						}
 						Trace.WriteLine(String.Format("Now playing: {0} ({1})", track, duration));
+						lastPlayingTrack = track;
 						lastPlayedTrack = track;
 					}
 					else
 					{
 						NotifyMsnMessenger(null);
-						lastPlayedTrack = null;
+						lastPlayingTrack = null;
+						if (lastPlayedTrack.Status == TrackStatus.Playing)
+						{
+							lastPlayedTrack.Status = TrackStatus.Played;
+						}
 						Trace.WriteLine(String.Format("{0}: {1}", track.Status, track));
 					}
 					InvokePlaying(new PlayingEventArgs
@@ -184,8 +197,12 @@ namespace LastHorizonte.Core
 		}
 
 
-		private static ScrobbleManager GetScrobbleManager(string username, string password)
+
+		private static Session GetSession(Configuration configuration)
 		{
+			var username = configuration.Username;
+			var password = configuration.Password;
+
 			if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
 			{
 				throw new AuthenticationException();
@@ -197,7 +214,13 @@ namespace LastHorizonte.Core
 			var session = new Session(API_KEY, API_SECRET);
 			session.Authenticate(username, password);
 
-			var connection = new Connection("hzt", Assembly.GetEntryAssembly().GetName().Version.ToString(), username, session);
+			return session;
+		}
+
+		private static ScrobbleManager GetScrobbleManager(Configuration configuration, Session session)
+		{
+			var clientVersion = Assembly.GetEntryAssembly().GetName().Version.ToString();
+			var connection = new Connection("hzt", clientVersion, configuration.Username, session);
 			return new ScrobbleManager(connection);
 		}
 
@@ -281,6 +304,18 @@ namespace LastHorizonte.Core
 			}
 		}
 
+		public void Love(Track track)
+		{
+			track.ToLastfmTrack(session).Love();
+			InvokeLoved(new TrackEventArgs { Track = track });
+		}
+
+		public void Ban(Track track)
+		{
+			track.ToLastfmTrack(session).Ban();
+			InvokeBanned(new TrackEventArgs { Track = track });
+		}
+
 
 		#region Events
 
@@ -305,7 +340,7 @@ namespace LastHorizonte.Core
 		}
 
 		public event PlayingEventHandler Playing;
-		private void InvokeScrobbled(ScrobbledEventArgs eventArgs)
+		private void InvokeScrobbled(TrackEventArgs eventArgs)
 		{
 			var eventHandler = Scrobbled;
 			if (eventHandler != null)
@@ -314,7 +349,7 @@ namespace LastHorizonte.Core
 			}
 		}
 
-		public event ScrobbledEventHandler Scrobbled;
+		public event TrackEventHandler Scrobbled;
 		private void InvokePlaying(PlayingEventArgs eventArgs)
 		{
 			var eventHandler = Playing;
@@ -323,12 +358,33 @@ namespace LastHorizonte.Core
 				eventHandler(this, eventArgs);
 			}
 		}
+
+		public event TrackEventHandler Loved;
+		private void InvokeLoved(TrackEventArgs eventArgs)
+		{
+			var eventHandler = Loved;
+			if (eventHandler != null)
+			{
+				eventHandler(this, eventArgs);
+			}
+		}
+
+		public event TrackEventHandler Banned;
+		private void InvokeBanned(TrackEventArgs eventArgs)
+		{
+			var eventHandler = Banned;
+			if (eventHandler != null)
+			{
+				eventHandler(this, eventArgs);
+			}
+		}
+
 		#endregion
 	}
 
-	public delegate void ScrobbledEventHandler(object sender, ScrobbledEventArgs eventArgs);
+	public delegate void TrackEventHandler(object sender, TrackEventArgs eventArgs);
 
-	public class ScrobbledEventArgs
+	public class TrackEventArgs
 	{
 		public Track Track { get; set; }
 	}
