@@ -37,6 +37,8 @@
 			this.linkLabel1 = new System.Windows.Forms.LinkLabel();
 			this.linkLabel2 = new System.Windows.Forms.LinkLabel();
 			this.linkLabel3 = new System.Windows.Forms.LinkLabel();
+			this.pictureBox1 = new System.Windows.Forms.PictureBox();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// labelProductName
@@ -129,15 +131,26 @@
 			this.linkLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.linkLabel3.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel3_LinkClicked);
 			// 
+			// pictureBox1
+			// 
+			this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Top;
+			this.pictureBox1.Image = global::LastHorizonte.Properties.Resources.splash;
+			this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+			this.pictureBox1.Name = "pictureBox1";
+			this.pictureBox1.Size = new System.Drawing.Size(349, 169);
+			this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+			this.pictureBox1.TabIndex = 9;
+			this.pictureBox1.TabStop = false;
+			// 
 			// AboutForm
 			// 
 			this.AcceptButton = this.closeButton;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.BackgroundImage = global::LastHorizonte.Properties.Resources.splash;
 			this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
 			this.CancelButton = this.closeButton;
 			this.ClientSize = new System.Drawing.Size(349, 438);
+			this.Controls.Add(this.pictureBox1);
 			this.Controls.Add(this.linkLabel3);
 			this.Controls.Add(this.linkLabel2);
 			this.Controls.Add(this.linkLabel1);
@@ -153,6 +166,7 @@
 			this.Name = "AboutForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "AboutForm";
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -168,5 +182,6 @@
 		private System.Windows.Forms.LinkLabel linkLabel1;
 		private System.Windows.Forms.LinkLabel linkLabel2;
 		private System.Windows.Forms.LinkLabel linkLabel3;
+		private System.Windows.Forms.PictureBox pictureBox1;
 	}
 }

@@ -58,6 +58,7 @@
 			this.cancelButton = new System.Windows.Forms.Button();
 			this.activatedCheckBox = new System.Windows.Forms.CheckBox();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+			this.pictureBox1 = new System.Windows.Forms.PictureBox();
 			groupBox1 = new System.Windows.Forms.GroupBox();
 			label2 = new System.Windows.Forms.Label();
 			label1 = new System.Windows.Forms.Label();
@@ -68,6 +69,7 @@
 			groupBox3.SuspendLayout();
 			this.contextMenuStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// groupBox1
@@ -219,7 +221,7 @@
             this.toolStripSeparator1,
             this.exitToolStripMenuItem});
 			this.contextMenuStrip.Name = "contextMenuStrip";
-			this.contextMenuStrip.Size = new System.Drawing.Size(192, 164);
+			this.contextMenuStrip.Size = new System.Drawing.Size(192, 142);
 			this.contextMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip_Opening);
 			// 
 			// activatedToolStripMenuItem
@@ -336,15 +338,26 @@
 			// 
 			this.errorProvider.ContainerControl = this;
 			// 
+			// pictureBox1
+			// 
+			this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Top;
+			this.pictureBox1.Image = global::LastHorizonte.Properties.Resources.splash;
+			this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+			this.pictureBox1.Name = "pictureBox1";
+			this.pictureBox1.Size = new System.Drawing.Size(349, 169);
+			this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+			this.pictureBox1.TabIndex = 6;
+			this.pictureBox1.TabStop = false;
+			// 
 			// OptionsForm
 			// 
 			this.AcceptButton = this.acceptButton;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.BackgroundImage = global::LastHorizonte.Properties.Resources.splash;
 			this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
 			this.CancelButton = this.cancelButton;
 			this.ClientSize = new System.Drawing.Size(349, 504);
+			this.Controls.Add(this.pictureBox1);
 			this.Controls.Add(groupBox1);
 			this.Controls.Add(groupBox3);
 			this.Controls.Add(groupBox2);
@@ -366,6 +379,7 @@
 			groupBox3.PerformLayout();
 			this.contextMenuStrip.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -396,5 +410,6 @@
 		private System.Windows.Forms.ToolStripMenuItem trackLoveToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem trackBanToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem trackPageToolStripMenuItem;
+		private System.Windows.Forms.PictureBox pictureBox1;
 	}
 }
