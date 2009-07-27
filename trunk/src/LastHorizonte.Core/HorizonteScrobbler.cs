@@ -183,7 +183,7 @@ namespace LastHorizonte.Core
 
 		private void NotifyMsnMessenger(Track track)
 		{
-			if (configuration != null && configuration.IsWindows)
+			if (configuration != null && Configuration.IsRunningOnWindows)
 			{
 				if (configuration.NotifyMsnMessenger)
 				{

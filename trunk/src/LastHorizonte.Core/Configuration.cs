@@ -16,7 +16,7 @@ namespace LastHorizonte.Core
 		public bool NotifySystemTray { get; set; }
 		public bool NotifyMsnMessenger { get; set; }
 
-		public bool IsWindows
+		public static bool IsRunningOnWindows
 		{
 			get
 			{
@@ -29,6 +29,14 @@ namespace LastHorizonte.Core
 			}
 		}
 
+		public static bool IsRunningOnMono
+		{
+			get
+			{
+				return Type.GetType("Mono.Runtime") != null;
+			}
+		}
+
 		public void SetPassword(string password)
 		{
 			Password = Lastfm.Utilities.md5(password);
@@ -38,9 +46,9 @@ namespace LastHorizonte.Core
 		{
 			RememberPassword = true;
 			StartActivated = true;
-			StartOnWindowsSession = IsWindows;
+			StartOnWindowsSession = IsRunningOnWindows;
 			NotifyLastFm = true;
-			NotifyMsnMessenger = IsWindows;
+			NotifyMsnMessenger = IsRunningOnWindows;
 			NotifySystemTray = true;
 		}
 
