@@ -75,7 +75,7 @@
 			// 
 			this.closeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.closeButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.closeButton.Location = new System.Drawing.Point(262, 403);
+			this.closeButton.Location = new System.Drawing.Point(262, 369);
 			this.closeButton.Name = "closeButton";
 			this.closeButton.Size = new System.Drawing.Size(75, 26);
 			this.closeButton.TabIndex = 4;
@@ -94,6 +94,8 @@
 			// 
 			// linkLabel1
 			// 
+			this.linkLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.linkLabel1.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.linkLabel1.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
 			this.linkLabel1.Location = new System.Drawing.Point(12, 303);
@@ -107,6 +109,8 @@
 			// 
 			// linkLabel2
 			// 
+			this.linkLabel2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.linkLabel2.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.linkLabel2.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
 			this.linkLabel2.Location = new System.Drawing.Point(12, 326);
@@ -120,6 +124,8 @@
 			// 
 			// linkLabel3
 			// 
+			this.linkLabel3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.linkLabel3.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.linkLabel3.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
 			this.linkLabel3.Location = new System.Drawing.Point(12, 280);
@@ -149,7 +155,7 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
 			this.CancelButton = this.closeButton;
-			this.ClientSize = new System.Drawing.Size(349, 438);
+			this.ClientSize = new System.Drawing.Size(349, 404);
 			this.Controls.Add(this.pictureBox1);
 			this.Controls.Add(this.linkLabel3);
 			this.Controls.Add(this.linkLabel2);
