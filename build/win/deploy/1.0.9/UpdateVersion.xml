@@ -1,0 +1,9 @@
+<VersionConfig><AvailableVersion>1.0.9</AvailableVersion>          
+<AppFileUrl>http://last-horizonte.googlecode.com/files/last-horizonte-1.0.9-update.zip</AppFileUrl> 
+﻿<LatestChanges>ATENCIÓN: No está funcionando la actualización automática en la versión 1.0.7. Si tienes esta versión, por favor selecciona "No", cierra la aplicación y descarga manualmente el instalador desde el sitio web.
+
+Nuevas funcionalidades:
+- Marcar tema que está sonando como favorito o vetado
+- Abrir página del tema en Last.fm</LatestChanges>
+<ChangeLogUrl>http://code.google.com/p/last-horizonte</ChangeLogUrl>
+</VersionConfig>

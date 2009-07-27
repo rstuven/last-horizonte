@@ -1,7 +1,7 @@
 @echo off
 ::setlocal EnableDelayedExpansion
 
-set VERSION=1.0.7
+set VERSION=1.0.9
 set NSIS="%ProgramFiles%\NSIS\makensis.exe" /V1 /DPRODUCT_VERSION=%VERSION%
 set SRC=..\..\src\
 set RELEASE=%SRC%LastHorizonte.Launcher\bin\Release\
