@@ -191,6 +191,11 @@ namespace LastHorizonte
 			accountChanged = true;
 		}
 
+		private void signupLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		{
+			Process.Start("http://www.lastfm.es/join");
+		}
+
 		private void cancelButton_Click(object sender, EventArgs e)
 		{
 			this.Close();

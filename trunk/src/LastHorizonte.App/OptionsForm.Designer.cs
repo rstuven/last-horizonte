@@ -59,6 +59,8 @@
 			this.activatedCheckBox = new System.Windows.Forms.CheckBox();
 			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
 			this.pictureBox1 = new System.Windows.Forms.PictureBox();
+			this.label3 = new System.Windows.Forms.Label();
+			this.signupLinkLabel = new System.Windows.Forms.LinkLabel();
 			groupBox1 = new System.Windows.Forms.GroupBox();
 			label2 = new System.Windows.Forms.Label();
 			label1 = new System.Windows.Forms.Label();
@@ -76,6 +78,8 @@
 			// 
 			groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
+			groupBox1.Controls.Add(this.signupLinkLabel);
+			groupBox1.Controls.Add(this.label3);
 			groupBox1.Controls.Add(label2);
 			groupBox1.Controls.Add(label1);
 			groupBox1.Controls.Add(this.usernameTextBox);
@@ -83,7 +87,7 @@
 			groupBox1.Controls.Add(this.rememberPasswordCheckBox);
 			groupBox1.Location = new System.Drawing.Point(12, 178);
 			groupBox1.Name = "groupBox1";
-			groupBox1.Size = new System.Drawing.Size(325, 101);
+			groupBox1.Size = new System.Drawing.Size(325, 125);
 			groupBox1.TabIndex = 0;
 			groupBox1.TabStop = false;
 			groupBox1.Text = "Cuenta de Last.fm";
@@ -140,7 +144,7 @@
 			groupBox2.Controls.Add(this.notifySystemTrayCheckBox);
 			groupBox2.Controls.Add(this.notifyLastFmCheckBox);
 			groupBox2.Controls.Add(this.notifyMsnMessegerCheckBox);
-			groupBox2.Location = new System.Drawing.Point(12, 285);
+			groupBox2.Location = new System.Drawing.Point(12, 306);
 			groupBox2.Name = "groupBox2";
 			groupBox2.Size = new System.Drawing.Size(325, 93);
 			groupBox2.TabIndex = 1;
@@ -183,7 +187,7 @@
 						| System.Windows.Forms.AnchorStyles.Right)));
 			groupBox3.Controls.Add(this.startOnWindowsSessionCheckBox);
 			groupBox3.Controls.Add(this.startActivatedCheckBox);
-			groupBox3.Location = new System.Drawing.Point(13, 384);
+			groupBox3.Location = new System.Drawing.Point(13, 402);
 			groupBox3.Name = "groupBox3";
 			groupBox3.Size = new System.Drawing.Size(324, 72);
 			groupBox3.TabIndex = 2;
@@ -221,7 +225,7 @@
             this.toolStripSeparator1,
             this.exitToolStripMenuItem});
 			this.contextMenuStrip.Name = "contextMenuStrip";
-			this.contextMenuStrip.Size = new System.Drawing.Size(192, 164);
+			this.contextMenuStrip.Size = new System.Drawing.Size(192, 142);
 			this.contextMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip_Opening);
 			// 
 			// activatedToolStripMenuItem
@@ -305,7 +309,7 @@
 			// acceptButton
 			// 
 			this.acceptButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.acceptButton.Location = new System.Drawing.Point(180, 467);
+			this.acceptButton.Location = new System.Drawing.Point(180, 480);
 			this.acceptButton.Name = "acceptButton";
 			this.acceptButton.Size = new System.Drawing.Size(77, 28);
 			this.acceptButton.TabIndex = 4;
@@ -317,7 +321,7 @@
 			// 
 			this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.cancelButton.Location = new System.Drawing.Point(263, 467);
+			this.cancelButton.Location = new System.Drawing.Point(263, 480);
 			this.cancelButton.Name = "cancelButton";
 			this.cancelButton.Size = new System.Drawing.Size(74, 28);
 			this.cancelButton.TabIndex = 5;
@@ -329,7 +333,7 @@
 			// 
 			this.activatedCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.activatedCheckBox.AutoSize = true;
-			this.activatedCheckBox.Location = new System.Drawing.Point(14, 471);
+			this.activatedCheckBox.Location = new System.Drawing.Point(14, 484);
 			this.activatedCheckBox.Name = "activatedCheckBox";
 			this.activatedCheckBox.Size = new System.Drawing.Size(120, 17);
 			this.activatedCheckBox.TabIndex = 3;
@@ -351,6 +355,26 @@
 			this.pictureBox1.TabIndex = 6;
 			this.pictureBox1.TabStop = false;
 			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.Location = new System.Drawing.Point(14, 100);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(100, 13);
+			this.label3.TabIndex = 7;
+			this.label3.Text = "¿No tienes cuenta?";
+			// 
+			// signupLinkLabel
+			// 
+			this.signupLinkLabel.AutoSize = true;
+			this.signupLinkLabel.Location = new System.Drawing.Point(120, 100);
+			this.signupLinkLabel.Name = "signupLinkLabel";
+			this.signupLinkLabel.Size = new System.Drawing.Size(147, 13);
+			this.signupLinkLabel.TabIndex = 8;
+			this.signupLinkLabel.TabStop = true;
+			this.signupLinkLabel.Text = "Créate una cuenta en Last.fm";
+			this.signupLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.signupLinkLabel_LinkClicked);
+			// 
 			// OptionsForm
 			// 
 			this.AcceptButton = this.acceptButton;
@@ -358,7 +382,7 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
 			this.CancelButton = this.cancelButton;
-			this.ClientSize = new System.Drawing.Size(349, 504);
+			this.ClientSize = new System.Drawing.Size(349, 517);
 			this.Controls.Add(this.pictureBox1);
 			this.Controls.Add(groupBox1);
 			this.Controls.Add(groupBox3);
@@ -413,5 +437,7 @@
 		private System.Windows.Forms.ToolStripMenuItem trackBanToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem trackPageToolStripMenuItem;
 		private System.Windows.Forms.PictureBox pictureBox1;
+		private System.Windows.Forms.LinkLabel signupLinkLabel;
+		private System.Windows.Forms.Label label3;
 	}
 }
