@@ -32,7 +32,7 @@ namespace LastHorizonte
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(true);
 
-			CheckUpdate(true);
+			CheckUpdate(false);
 
 			Configuration = Configuration.Load(ConfigurationFilename);
 
@@ -57,10 +57,6 @@ namespace LastHorizonte
 
 		private static void CreateNotifyIcon(OptionsForm optionsForm)
 		{
-			if (Configuration.IsRunningOnMono)
-			{
-				return;
-			}
 			notifyIcon = new NotifyIcon
 			{
 				Icon = optionsForm.Icon,
@@ -189,7 +185,7 @@ namespace LastHorizonte
 
 		private static void ShowBalloonTipInfo(string title, string text)
 		{
-			if (notifyIcon == null)
+			if (Configuration.IsRunningOnMono)
 			{
 				return;
 			}
@@ -198,7 +194,7 @@ namespace LastHorizonte
 
 		private static void ShowBalloonTipError(string title, string text)
 		{
-			if (notifyIcon == null)
+			if (Configuration.IsRunningOnMono)
 			{
 				return;
 			}
@@ -207,10 +203,6 @@ namespace LastHorizonte
 
 		private static void SetNotifyIconText(string format, params object[] args)
 		{
-			if (notifyIcon == null)
-			{
-				return;
-			}
 			var text = String.Format(format, args);
 			// Maxmimun length supported by NotifyIcon.Text is 63 characters.
 			if (text.Length > 63)
