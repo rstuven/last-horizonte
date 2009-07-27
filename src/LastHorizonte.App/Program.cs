@@ -44,7 +44,10 @@ namespace LastHorizonte
 
 			Application.ApplicationExit += ((sender1, e) =>
 			{
-				notifyIcon.Visible = false;
+				if (notifyIcon != null)
+				{
+					notifyIcon.Visible = false;
+				}
 				horizonteScrobbler.Stop();
 			});
 
@@ -54,6 +57,10 @@ namespace LastHorizonte
 
 		private static void CreateNotifyIcon(OptionsForm optionsForm)
 		{
+			if (Configuration.IsRunningOnMono)
+			{
+				return;
+			}
 			notifyIcon = new NotifyIcon
 			{
 				Icon = optionsForm.Icon,
@@ -61,7 +68,7 @@ namespace LastHorizonte
 				ContextMenuStrip = optionsForm.contextMenuStrip,
 				Text = "Iniciando sesión..."
 			};
-			notifyIcon.ShowBalloonTip(0, Application.ProductName, notifyIcon.Text, ToolTipIcon.Info);
+			ShowBalloonTipInfo(Application.ProductName, notifyIcon.Text);
 
 			notifyIcon.DoubleClick +=
 				delegate
@@ -126,7 +133,7 @@ namespace LastHorizonte
 			}
 			catch(Exception ex)
 			{
-				notifyIcon.ShowBalloonTip(5000, Application.ProductName, ex.Message, ToolTipIcon.Error);
+				ShowBalloonTipError(Application.ProductName, ex.Message);
 			}
 		}
 
@@ -144,7 +151,7 @@ namespace LastHorizonte
 				{
 					if (track.Status == TrackStatus.Error)
 					{
-						notifyIcon.ShowBalloonTip(0, Application.ProductName, track.Title, ToolTipIcon.Error);
+						ShowBalloonTipError(Application.ProductName, track.Title);
 						SetNotifyIconText("{0}: {1}", "Error", track.Title);
 					}
 					else if (track.Status == TrackStatus.None)
@@ -156,32 +163,54 @@ namespace LastHorizonte
 						var status = (track.Status == TrackStatus.Coming ? "Luego en" : "En") + " Horizonte";
 						if (Configuration.NotifySystemTray)
 						{
-							notifyIcon.ShowBalloonTip(0, status, track.ToString(), ToolTipIcon.Info);
+							ShowBalloonTipInfo(status, track.ToString());
 						}
 						SetNotifyIconText("{0}: {1}", status, track.ToString());
 					}
 				}
 			});
-			horizonteScrobbler.Loved += ((sender, eventargs) => 
+			horizonteScrobbler.Loved += ((sender, eventargs) =>
 			{
-				notifyIcon.ShowBalloonTip(0, "Favorito", eventargs.Track.ToString(), ToolTipIcon.Info);
+				ShowBalloonTipInfo("Favorito", eventargs.Track.ToString());
 			});
 			horizonteScrobbler.Banned += ((sender, eventargs) => 
 			{
-				notifyIcon.ShowBalloonTip(0, "Vetado", eventargs.Track.ToString(), ToolTipIcon.Info);
+				ShowBalloonTipInfo("Vetado", eventargs.Track.ToString());
 			});
 			horizonteScrobbler.Started += ((sender, eventargs) =>
 			{
-				notifyIcon.ShowBalloonTip(0, Application.ProductName, "Activado", ToolTipIcon.Info);
+				ShowBalloonTipInfo(Application.ProductName, "Activado");
 			});
 			horizonteScrobbler.Stopped += ((sender, eventargs) =>
 			{
-				notifyIcon.ShowBalloonTip(0, Application.ProductName, "Desactivado", ToolTipIcon.Info);
+				ShowBalloonTipInfo(Application.ProductName, "Desactivado");
 			});
+		}
+
+		private static void ShowBalloonTipInfo(string title, string text)
+		{
+			if (notifyIcon == null)
+			{
+				return;
+			}
+			notifyIcon.ShowBalloonTip(0, title, text, ToolTipIcon.Info);
+		}
+
+		private static void ShowBalloonTipError(string title, string text)
+		{
+			if (notifyIcon == null)
+			{
+				return;
+			}
+			notifyIcon.ShowBalloonTip(0, title, text, ToolTipIcon.Error);
 		}
 
 		private static void SetNotifyIconText(string format, params object[] args)
 		{
+			if (notifyIcon == null)
+			{
+				return;
+			}
 			var text = String.Format(format, args);
 			// Maxmimun length supported by NotifyIcon.Text is 63 characters.
 			if (text.Length > 63)

@@ -98,7 +98,7 @@ namespace LastHorizonte
 			cfg.StartActivated = startActivatedCheckBox.Checked;
 			cfg.StartOnWindowsSession = startOnWindowsSessionCheckBox.Checked;
 
-			if (cfg.IsWindows)
+			if (Configuration.IsRunningOnWindows)
 			{
 				try
 				{
@@ -172,11 +172,12 @@ namespace LastHorizonte
 			rememberPasswordCheckBox.Checked = cfg.RememberPassword;
 			notifyLastFmCheckBox.Checked = cfg.NotifyLastFm;
 			notifyMsnMessegerCheckBox.Checked = cfg.NotifyMsnMessenger;
-			notifyMsnMessegerCheckBox.Enabled = cfg.IsWindows;
+			notifyMsnMessegerCheckBox.Enabled = Configuration.IsRunningOnWindows;
 			notifySystemTrayCheckBox.Checked = cfg.NotifySystemTray;
+			notifySystemTrayCheckBox.Enabled = !Configuration.IsRunningOnMono;
 			startActivatedCheckBox.Checked = cfg.StartActivated;
 			startOnWindowsSessionCheckBox.Checked = cfg.StartOnWindowsSession;
-			startOnWindowsSessionCheckBox.Enabled = cfg.IsWindows;
+			startOnWindowsSessionCheckBox.Enabled = Configuration.IsRunningOnWindows;
 			activatedCheckBox.Checked = Program.HorizonteScrobbler.IsStarted;
 		}
 
