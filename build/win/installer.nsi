@@ -62,6 +62,7 @@ Section "MainSection" SEC01
   File "${PRODUCT_OUTDIR}\LastHorizonte.App.dll"
   File "${PRODUCT_OUTDIR}\LastHorizonte.Core.dll"
   File "${PRODUCT_OUTDIR}\lastfm-sharp.dll"
+  File "${PRODUCT_OUTDIR}\CSharpZipLib.dll"
   File "${PRODUCT_OUTDIR}\README.txt"
   File "${PRODUCT_OUTDIR}\COPYING.txt"
   File "${PRODUCT_OUTDIR}\AUTHORS.txt"
@@ -102,10 +103,10 @@ FunctionEnd
 
 Section Uninstall
   Delete "$INSTDIR\${PRODUCT_NAME}.url"
-  Delete "$INSTDIR\uninst.exe"
   Delete "$INSTDIR\AUTHORS.txt"
   Delete "$INSTDIR\COPYING.txt"
   Delete "$INSTDIR\README.txt"
+  Delete "$INSTDIR\CSharpZipLib.dll"
   Delete "$INSTDIR\lastfm-sharp.dll"
   Delete "$INSTDIR\LastHorizonte.Core.dll"
   Delete "$INSTDIR\LastHorizonte.App.dll"
@@ -116,6 +117,8 @@ Section Uninstall
   Delete "$QUICKLAUNCH\Last.Horizonte.lnk"
   Delete "$DESKTOP\Last.Horizonte.lnk"
   Delete "$SMPROGRAMS\Last.Horizonte\Last.Horizonte.lnk"
+
+  Delete "$INSTDIR\uninst.exe"
 
   RMDir "$SMPROGRAMS\Last.Horizonte"
   RMDir "$INSTDIR"
