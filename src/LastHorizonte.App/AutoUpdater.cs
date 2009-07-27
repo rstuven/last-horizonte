@@ -35,7 +35,6 @@
 
 using System;
 using System.IO;
-using System.Net.Security;
 using System.Reflection;
 using System.Windows.Forms;
 using System.Threading;
@@ -60,7 +59,7 @@ namespace Conversive.AutoUpdater
 		[DefaultValue(@"http://myproxy.com:8080/")]
 		[Description("The Proxy server URL.(For example:http://myproxy.com:port)"),
 		 Category("AutoUpdater Configuration")]
-		public string ProxyUrl { get; set; }
+		public string ProxyURL { get; set; }
 
 		[DefaultValue(@"")]
 		[Description("The UserName to authenticate with."),
@@ -160,12 +159,10 @@ namespace Conversive.AutoUpdater
 			config.OnLoadConfigError += config_OnLoadConfigError;
 
 			//For using untrusted SSL Certificates
-			ServicePointManager.ServerCertificateValidationCallback =
-				new RemoteCertificateValidationCallback(
-					(sender, certificate, chain, sslPolicyErrors) => true);
+			ServicePointManager.CertificatePolicy = new TrustAllCertificatePolicy();
 
 			//Do the load of the config file
-			if (config.LoadConfig(this.ConfigUrl, this.LoginUserName, this.LoginUserPass, this.ProxyUrl, this.ProxyEnabled))
+			if (config.LoadConfig(this.ConfigUrl, this.LoginUserName, this.LoginUserPass, this.ProxyURL, this.ProxyEnabled))
 			{
 				this.AutoUpdateConfig = config;
 				if (this.OnConfigFileDownloaded != null)
@@ -261,7 +258,7 @@ namespace Conversive.AutoUpdater
 				//Added 11/16/2004 For Proxy Clients, Thanks George for submitting these changes
 				if (this.ProxyEnabled)
 				{
-					request.Proxy = new WebProxy(this.ProxyUrl);
+					request.Proxy = new WebProxy(this.ProxyURL);
 				}
 
 				using (var response = request.GetResponse())
@@ -373,4 +370,12 @@ namespace Conversive.AutoUpdater
 		}
 	}//class AutoUpdater
 
+	public class TrustAllCertificatePolicy : ICertificatePolicy
+	{
+		public bool CheckValidationResult(ServicePoint sp,
+			System.Security.Cryptography.X509Certificates.X509Certificate cert, WebRequest req, int problem)
+		{
+			return true;
+		}
+	}//class TrustAllCertificatePolicy
 }//namespace Conversive.AutoUpdater
