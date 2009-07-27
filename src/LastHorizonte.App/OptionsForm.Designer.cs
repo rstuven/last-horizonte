@@ -221,7 +221,7 @@
             this.toolStripSeparator1,
             this.exitToolStripMenuItem});
 			this.contextMenuStrip.Name = "contextMenuStrip";
-			this.contextMenuStrip.Size = new System.Drawing.Size(192, 142);
+			this.contextMenuStrip.Size = new System.Drawing.Size(192, 164);
 			this.contextMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip_Opening);
 			// 
 			// activatedToolStripMenuItem
@@ -238,6 +238,7 @@
             this.trackLoveToolStripMenuItem,
             this.trackBanToolStripMenuItem,
             this.trackPageToolStripMenuItem});
+			this.trackToolStripMenuItem.Image = global::LastHorizonte.Properties.Resources.music;
 			this.trackToolStripMenuItem.Name = "trackToolStripMenuItem";
 			this.trackToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
 			this.trackToolStripMenuItem.Text = "Tema";
@@ -267,6 +268,7 @@
 			// 
 			// openProfileToolStripMenuItem
 			// 
+			this.openProfileToolStripMenuItem.Image = global::LastHorizonte.Properties.Resources.profile;
 			this.openProfileToolStripMenuItem.Name = "openProfileToolStripMenuItem";
 			this.openProfileToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
 			this.openProfileToolStripMenuItem.Text = "Abrir mi perfil en Last.fm";
