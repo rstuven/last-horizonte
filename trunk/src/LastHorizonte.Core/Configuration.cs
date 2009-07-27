@@ -38,9 +38,9 @@ namespace LastHorizonte.Core
 		{
 			RememberPassword = true;
 			StartActivated = true;
-			StartOnWindowsSession = true;
+			StartOnWindowsSession = IsWindows;
 			NotifyLastFm = true;
-			NotifyMsnMessenger = true;
+			NotifyMsnMessenger = IsWindows;
 			NotifySystemTray = true;
 		}
 

@@ -176,6 +176,7 @@ namespace LastHorizonte
 			notifySystemTrayCheckBox.Checked = cfg.NotifySystemTray;
 			startActivatedCheckBox.Checked = cfg.StartActivated;
 			startOnWindowsSessionCheckBox.Checked = cfg.StartOnWindowsSession;
+			startOnWindowsSessionCheckBox.Enabled = cfg.IsWindows;
 			activatedCheckBox.Checked = Program.HorizonteScrobbler.IsStarted;
 		}
 
