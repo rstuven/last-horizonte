@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Reflection;
 using System.Windows.Forms;
+using LastHorizonte.Core;
 
 namespace LastHorizonte
 {
@@ -16,6 +17,12 @@ namespace LastHorizonte
 			this.labelCopyright.Text = AssemblyCopyright;
 			//this.labelCompanyName.Text = AssemblyCompany;
 			this.labelDescription.Text = AssemblyDescription;
+			if (Configuration.IsRunningOnMono)
+			{
+				this.linkLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+				this.linkLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+				this.linkLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			}
 		}
 
 		#region Assembly Attribute Accessors
