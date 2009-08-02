@@ -138,7 +138,6 @@ namespace LastHorizonte
 			notifyMsnMessegerCheckBox.Checked = cfg.NotifyMsnMessenger;
 			notifyMsnMessegerCheckBox.Enabled = Configuration.IsRunningOnWindows;
 			notifySystemTrayCheckBox.Checked = cfg.NotifySystemTray;
-			notifySystemTrayCheckBox.Enabled = !Configuration.IsRunningOnMono;
 			startActivatedCheckBox.Checked = cfg.StartActivated;
 			startOnWindowsSessionCheckBox.Checked = cfg.StartOnWindowsSession;
 			startOnWindowsSessionCheckBox.Enabled = Configuration.IsRunningOnWindows;
