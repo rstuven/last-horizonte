@@ -36,10 +36,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="atk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <Reference Include="CSharpZipLib, Version=0.5.0.0, Culture=neutral">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\CSharpZipLib.dll</HintPath>
     </Reference>
+    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gtk-dotnet, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <Reference Include="gtk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -50,25 +55,34 @@
     <Compile Include="..\SolutionVersion.cs">
       <Link>SolutionVersion.cs</Link>
     </Compile>
-    <Compile Include="AboutForm.cs">
+    <Compile Include="Gtk\GtkApplicationPresenter.cs" />
+    <Compile Include="Gtk\GtkMenuItemHanlder.cs" />
+    <Compile Include="Model\CheckedMenuItemParams.cs" />
+    <Compile Include="Model\IMenuItem.cs" />
+    <Compile Include="Model\IMenuItemParams.cs" />
+    <Compile Include="Model\MenuItemParams.cs" />
+    <Compile Include="WinForms\AboutForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AboutForm.Designer.cs">
+    <Compile Include="WinForms\AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="WinForms\WinFormsApplicationPresenter.cs" />
     <Compile Include="AutoUpdateConfig.cs" />
     <Compile Include="AutoUpdater.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="OptionsForm.cs">
+    <Compile Include="Model\ContextMenu.cs" />
+    <Compile Include="IApplicationPresenter.cs" />
+    <Compile Include="WinForms\OptionsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="OptionsForm.Designer.cs">
+    <Compile Include="WinForms\OptionsForm.Designer.cs">
       <DependentUpon>OptionsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="OptionsForm.resx">
+    <EmbeddedResource Include="WinForms\OptionsForm.resx">
       <DependentUpon>OptionsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -90,12 +104,13 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="UpdateForm.cs">
+    <Compile Include="WinForms\UpdateForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="UpdateForm.Designer.cs">
+    <Compile Include="WinForms\UpdateForm.Designer.cs">
       <DependentUpon>UpdateForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="WinForms\WinFormsMenuItemHanlder.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LastHorizonte.Core\LastHorizonte.Core.csproj">
@@ -104,10 +119,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="AboutForm.resx">
+    <EmbeddedResource Include="WinForms\AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UpdateForm.resx">
+    <EmbeddedResource Include="WinForms\UpdateForm.resx">
       <DependentUpon>UpdateForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
@@ -131,6 +146,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Images\profile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\logo.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

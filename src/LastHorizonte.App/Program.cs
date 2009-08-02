@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Security.Authentication;
 using System.Threading;
@@ -12,8 +13,8 @@ namespace LastHorizonte
 	{
 		internal static readonly string ConfigurationFilename = Path.Combine(Application.UserAppDataPath, "config.xml");
 		public static Configuration Configuration;
-		private static NotifyIcon notifyIcon;
 		private static HorizonteScrobbler horizonteScrobbler;
+		private static IApplicationPresenter application;
 
 		public static HorizonteScrobbler HorizonteScrobbler
 		{
@@ -29,56 +30,32 @@ namespace LastHorizonte
 		[STAThread]
 		public static void Main()
 		{
-			Application.EnableVisualStyles();
-			Application.SetCompatibleTextRenderingDefault(true);
+			if (Configuration.IsRunningOnMono)
+			{
+				application = new GtkApplicationPresenter();
+			}
+			else
+			{
+				application = new WinFormsApplicationPresenter();
+			}
 
-			CheckUpdate(false);
+			application.Initialize();
+
+			if (!Configuration.IsRunningOnMono)
+			{
+				CheckUpdate(false);
+			}
 
 			Configuration = Configuration.Load(ConfigurationFilename);
 
-			var optionsForm = new OptionsForm();
 
-			CreateNotifyIcon(optionsForm);
-			CreateHorizonteScrobbler(optionsForm);
-			InitializeAndStartScrobbler(optionsForm, Configuration);
+			application.CreateNotifyIcon(ContextMenu.GetItems(application), "Iniciando sesión...");
+			CreateHorizonteScrobbler();
+			InitializeAndStartScrobbler(Configuration);
 
-			Application.ApplicationExit += ((sender1, e) =>
-			{
-				if (notifyIcon != null)
-				{
-					notifyIcon.Visible = false;
-				}
-				horizonteScrobbler.Stop();
-			});
-
-			Application.Run();
-
+			application.Start(horizonteScrobbler);
 		}
 
-		private static void CreateNotifyIcon(OptionsForm optionsForm)
-		{
-			notifyIcon = new NotifyIcon
-			{
-				Icon = optionsForm.Icon,
-				Visible = true,
-				ContextMenuStrip = optionsForm.contextMenuStrip,
-				Text = "Iniciando sesión..."
-			};
-			ShowBalloonTipInfo(Application.ProductName, notifyIcon.Text);
-
-			notifyIcon.DoubleClick +=
-				delegate
-				{
-					if (optionsForm.Visible)
-					{
-						optionsForm.Hide();
-					}
-					else
-					{
-						optionsForm.Open();
-					}
-				};
-		}
 
 		internal static void CheckUpdate(bool checkSingleInstance)
 		{
@@ -96,28 +73,14 @@ namespace LastHorizonte
 			{
 				updater.OnConfigFileDownloaded += delegate
 				{
-					CheckSingleInstance();
+					//CheckSingleInstance();
 				};
 			}
 
 			updater.TryUpdate();
 		}
 
-		private static void CheckSingleInstance()
-		{
-			bool createdNew;
-			var mutex = new Mutex(true, Application.ProductName + "_Instance", out createdNew);
-			if (!createdNew)
-			{
-				MessageBox.Show("La aplicación ya está abierta.",
-				                Application.ProductName,
-				                MessageBoxButtons.OK,
-				                MessageBoxIcon.Exclamation);
-				Application.Exit();
-			}
-		}
-
-		internal static void InitializeAndStartScrobbler(OptionsForm optionsForm, Configuration configuration)
+		internal static void InitializeAndStartScrobbler(Configuration configuration)
 		{
 			try
 			{
@@ -125,15 +88,15 @@ namespace LastHorizonte
 			}
 			catch (AuthenticationException)
 			{
-				optionsForm.OpenWithAuthenticationError();
+				application.OpenAuthentication();
 			}
 			catch(Exception ex)
 			{
-				ShowBalloonTipError(Application.ProductName, ex.Message);
+				application.ShowBalloonTipError(Application.ProductName, ex.Message);
 			}
 		}
 
-		internal static void CreateHorizonteScrobbler(OptionsForm optionsForm)
+		internal static void CreateHorizonteScrobbler()
 		{
 			if (horizonteScrobbler != null)
 			{
@@ -147,69 +110,45 @@ namespace LastHorizonte
 				{
 					if (track.Status == TrackStatus.Error)
 					{
-						ShowBalloonTipError(Application.ProductName, track.Title);
-						SetNotifyIconText("{0}: {1}", "Error", track.Title);
+						application.ShowBalloonTipError(null, track.Title);
+						application.SetNotifyIconText("{0}: {1}", "Error", track.Title);
 					}
 					else if (track.Status == TrackStatus.None)
 					{
-						SetNotifyIconText("{0} esperando a que suene la mejor música...", Application.ProductName);
+						application.SetNotifyIconText("{0} esperando a que suene la mejor música...", Application.ProductName);
 					}
 					else
 					{
 						var status = (track.Status == TrackStatus.Coming ? "Luego en" : "En") + " Horizonte";
 						if (Configuration.NotifySystemTray)
 						{
-							ShowBalloonTipInfo(status, track.ToString());
+							application.ShowBalloonTipInfo(status, track.ToString());
 						}
-						SetNotifyIconText("{0}: {1}", status, track.ToString());
+						application.SetNotifyIconText("{0}: {1}", status, track.ToString());
 					}
 				}
 			});
 			horizonteScrobbler.Loved += ((sender, eventargs) =>
 			{
-				ShowBalloonTipInfo("Favorito", eventargs.Track.ToString());
+				application.ShowBalloonTipInfo("Favorito", eventargs.Track.ToString());
 			});
 			horizonteScrobbler.Banned += ((sender, eventargs) => 
 			{
-				ShowBalloonTipInfo("Vetado", eventargs.Track.ToString());
+				application.ShowBalloonTipInfo("Vetado", eventargs.Track.ToString());
 			});
 			horizonteScrobbler.Started += ((sender, eventargs) =>
 			{
-				ShowBalloonTipInfo(Application.ProductName, "Activado");
+				application.ShowBalloonTipInfo(Application.ProductName, "Activado");
 			});
 			horizonteScrobbler.Stopped += ((sender, eventargs) =>
 			{
-				ShowBalloonTipInfo(Application.ProductName, "Desactivado");
+				application.ShowBalloonTipInfo(Application.ProductName, "Desactivado");
 			});
 		}
 
-		private static void ShowBalloonTipInfo(string title, string text)
+		public static void OpenLastFmSignup()
 		{
-			if (Configuration.IsRunningOnMono)
-			{
-				return;
-			}
-			notifyIcon.ShowBalloonTip(0, title, text, ToolTipIcon.Info);
-		}
-
-		private static void ShowBalloonTipError(string title, string text)
-		{
-			if (Configuration.IsRunningOnMono)
-			{
-				return;
-			}
-			notifyIcon.ShowBalloonTip(0, title, text, ToolTipIcon.Error);
-		}
-
-		private static void SetNotifyIconText(string format, params object[] args)
-		{
-			var text = String.Format(format, args);
-			// Maxmimun length supported by NotifyIcon.Text is 63 characters.
-			if (text.Length > 63)
-			{
-				text = text.Substring(0, 60) + "...";
-			}
-			notifyIcon.Text = text;
+			Process.Start("http://www.lastfm.es/join");
 		}
 	}
 }

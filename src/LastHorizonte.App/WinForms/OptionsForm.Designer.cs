@@ -43,17 +43,6 @@
 			this.notifyMsnMessegerCheckBox = new System.Windows.Forms.CheckBox();
 			this.startOnWindowsSessionCheckBox = new System.Windows.Forms.CheckBox();
 			this.startActivatedCheckBox = new System.Windows.Forms.CheckBox();
-			this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-			this.activatedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.trackToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.trackLoveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.trackBanToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.trackPageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.openProfileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.acceptButton = new System.Windows.Forms.Button();
 			this.cancelButton = new System.Windows.Forms.Button();
 			this.activatedCheckBox = new System.Windows.Forms.CheckBox();
@@ -69,7 +58,6 @@
 			groupBox1.SuspendLayout();
 			groupBox2.SuspendLayout();
 			groupBox3.SuspendLayout();
-			this.contextMenuStrip.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.SuspendLayout();
@@ -214,98 +202,6 @@
 			this.startActivatedCheckBox.Text = "Activar scrobbling al inicio";
 			this.startActivatedCheckBox.UseVisualStyleBackColor = true;
 			// 
-			// contextMenuStrip
-			// 
-			this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.activatedToolStripMenuItem,
-            this.trackToolStripMenuItem,
-            this.openProfileToolStripMenuItem,
-            this.optionsToolStripMenuItem,
-            this.aboutToolStripMenuItem,
-            this.toolStripSeparator1,
-            this.exitToolStripMenuItem});
-			this.contextMenuStrip.Name = "contextMenuStrip";
-			this.contextMenuStrip.Size = new System.Drawing.Size(192, 142);
-			this.contextMenuStrip.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip_Opening);
-			// 
-			// activatedToolStripMenuItem
-			// 
-			this.activatedToolStripMenuItem.CheckOnClick = true;
-			this.activatedToolStripMenuItem.Name = "activatedToolStripMenuItem";
-			this.activatedToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
-			this.activatedToolStripMenuItem.Text = "Scrobbling activado";
-			this.activatedToolStripMenuItem.Click += new System.EventHandler(this.activatedToolStripMenuItem_Click);
-			// 
-			// trackToolStripMenuItem
-			// 
-			this.trackToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.trackLoveToolStripMenuItem,
-            this.trackBanToolStripMenuItem,
-            this.trackPageToolStripMenuItem});
-			this.trackToolStripMenuItem.Image = global::LastHorizonte.Properties.Resources.music;
-			this.trackToolStripMenuItem.Name = "trackToolStripMenuItem";
-			this.trackToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
-			this.trackToolStripMenuItem.Text = "Tema";
-			// 
-			// trackLoveToolStripMenuItem
-			// 
-			this.trackLoveToolStripMenuItem.Image = global::LastHorizonte.Properties.Resources.love;
-			this.trackLoveToolStripMenuItem.Name = "trackLoveToolStripMenuItem";
-			this.trackLoveToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
-			this.trackLoveToolStripMenuItem.Text = "Favorito";
-			this.trackLoveToolStripMenuItem.Click += new System.EventHandler(this.trackLoveToolStripMenuItem_Click);
-			// 
-			// trackBanToolStripMenuItem
-			// 
-			this.trackBanToolStripMenuItem.Image = global::LastHorizonte.Properties.Resources.ban;
-			this.trackBanToolStripMenuItem.Name = "trackBanToolStripMenuItem";
-			this.trackBanToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
-			this.trackBanToolStripMenuItem.Text = "Vetar";
-			this.trackBanToolStripMenuItem.Click += new System.EventHandler(this.trackBanToolStripMenuItem_Click);
-			// 
-			// trackPageToolStripMenuItem
-			// 
-			this.trackPageToolStripMenuItem.Name = "trackPageToolStripMenuItem";
-			this.trackPageToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
-			this.trackPageToolStripMenuItem.Text = "Abrir página en Last.fm";
-			this.trackPageToolStripMenuItem.Click += new System.EventHandler(this.trackPageToolStripMenuItem_Click);
-			// 
-			// openProfileToolStripMenuItem
-			// 
-			this.openProfileToolStripMenuItem.Image = global::LastHorizonte.Properties.Resources.profile;
-			this.openProfileToolStripMenuItem.Name = "openProfileToolStripMenuItem";
-			this.openProfileToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
-			this.openProfileToolStripMenuItem.Text = "Abrir mi perfil en Last.fm";
-			this.openProfileToolStripMenuItem.Click += new System.EventHandler(this.openProfileToolStripMenuItem_Click);
-			// 
-			// optionsToolStripMenuItem
-			// 
-			this.optionsToolStripMenuItem.Image = global::LastHorizonte.Properties.Resources.options;
-			this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-			this.optionsToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
-			this.optionsToolStripMenuItem.Text = "Opciones...";
-			this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
-			// 
-			// aboutToolStripMenuItem
-			// 
-			this.aboutToolStripMenuItem.Image = global::LastHorizonte.Properties.Resources.information;
-			this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-			this.aboutToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
-			this.aboutToolStripMenuItem.Text = "Acerca de...";
-			this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
-			// 
-			// toolStripSeparator1
-			// 
-			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(188, 6);
-			// 
-			// exitToolStripMenuItem
-			// 
-			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-			this.exitToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
-			this.exitToolStripMenuItem.Text = "Cerrar";
-			this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
-			// 
 			// acceptButton
 			// 
 			this.acceptButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -403,7 +299,6 @@
 			groupBox2.PerformLayout();
 			groupBox3.ResumeLayout(false);
 			groupBox3.PerformLayout();
-			this.contextMenuStrip.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
 			this.ResumeLayout(false);
@@ -413,10 +308,6 @@
 
 		#endregion
 
-		private System.Windows.Forms.ToolStripMenuItem activatedToolStripMenuItem;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-		private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-		public System.Windows.Forms.ContextMenuStrip contextMenuStrip;
 		private System.Windows.Forms.TextBox usernameTextBox;
 		private System.Windows.Forms.TextBox passwordTextBox;
 		private System.Windows.Forms.CheckBox rememberPasswordCheckBox;
@@ -427,15 +318,8 @@
 		private System.Windows.Forms.CheckBox notifySystemTrayCheckBox;
 		private System.Windows.Forms.CheckBox activatedCheckBox;
 		private System.Windows.Forms.CheckBox startActivatedCheckBox;
-		private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
 		private System.Windows.Forms.ErrorProvider errorProvider;
-		private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem openProfileToolStripMenuItem;
 		private System.Windows.Forms.CheckBox startOnWindowsSessionCheckBox;
-		private System.Windows.Forms.ToolStripMenuItem trackToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem trackLoveToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem trackBanToolStripMenuItem;
-		private System.Windows.Forms.ToolStripMenuItem trackPageToolStripMenuItem;
 		private System.Windows.Forms.PictureBox pictureBox1;
 		private System.Windows.Forms.LinkLabel signupLinkLabel;
 		private System.Windows.Forms.Label label3;
