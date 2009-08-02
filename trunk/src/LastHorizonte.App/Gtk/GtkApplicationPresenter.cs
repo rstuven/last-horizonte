@@ -83,7 +83,7 @@ namespace LastHorizonte
 				    Summary = title, 
 				    Body = text, 
 				    Urgency = Urgency.Normal, 
-				    IconName = Stock.DialogInfo
+				    Icon = ToPixbuf(Resources.logo)
 				};
 				AttachToStatusIcon(notify, this.trayIcon);
 				notify.Show();
@@ -99,8 +99,8 @@ namespace LastHorizonte
 				{
 				    Summary = title,
 				    Body = text,
-				    Urgency = Urgency.Normal,
-				    IconName = Stock.DialogInfo
+				    Urgency = Urgency.Critical,
+				    IconName = Stock.DialogError
 				};
 				AttachToStatusIcon(notify, this.trayIcon);
 				notify.Show();
