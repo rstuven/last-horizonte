@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
@@ -266,7 +266,7 @@ namespace LastHorizonte.Core
 			xml = CleanInvalidXmlRegex.Replace(xml, "");
 			xml = xml
 				.Replace("&", "&amp;")
-				.Replace("�", "'")
+				.Replace("´", "'")
 				;
 			return xml;
 		}
