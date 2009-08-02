@@ -43,7 +43,7 @@ namespace LastHorizonte
 			};
 			ShowBalloonTipInfo(Application.ProductName, notifyIcon.Text);
 
-			notifyIcon.DoubleClick +=
+			notifyIcon.Click +=
 				delegate
 				{
 					if (optionsForm.Visible)
