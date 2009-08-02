@@ -7,6 +7,7 @@ using LastHorizonte.Core;
 using LastHorizonte.Properties;
 using GtkImage = Gtk.Image;
 using GdiImage = System.Drawing.Image;
+using Notifications;
 
 namespace LastHorizonte
 {
@@ -15,19 +16,27 @@ namespace LastHorizonte
 		private StatusIcon trayIcon;
 		private OptionsForm optionsForm;
 
-		#region Implementation of IApplicationController
+		#region Implementation of IApplicationPresenter
 
 		public void Initialize()
 		{
+			System.Windows.Forms.Application.EnableVisualStyles();
+			System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(true);
 			Application.Init();
-			this.optionsForm = new OptionsForm();
+			Application.Invoke(delegate
+			{
+				this.optionsForm = new OptionsForm();
+			});
 		}
 
 		public void Start(HorizonteScrobbler horizonteScrobbler)
 		{
 			GLib.Timeout.Add(100, delegate
 			{
-				System.Windows.Forms.Application.DoEvents();
+				Application.Invoke(delegate
+				{
+					System.Windows.Forms.Application.DoEvents();
+				});
 				return true;
 			});
 			Application.Run();
@@ -69,44 +78,68 @@ namespace LastHorizonte
 
 		public void ShowBalloonTipInfo(string title, string text)
 		{
-			//var notify = new Notification
-			//{
-			//    Summary = title, 
-			//    Body = text, 
-			//    Urgency = Urgency.Normal, 
-			//    IconName = Stock.DialogInfo
-			//};
-			//notify.AttachToStatusIcon(this.trayIcon);
-			////notify.AddAction("name", "label", delegate
-			////{
-			////});
-			//notify.Show();
+			Application.Invoke(delegate
+			{
+				var notify = new Notification
+				{
+				    Summary = title, 
+				    Body = text, 
+				    Urgency = Urgency.Normal, 
+				    IconName = Stock.DialogInfo
+				};
+				AttachToStatusIcon(notify, this.trayIcon);
+				notify.Show();
+
+			});
 		}
 
 		public void ShowBalloonTipError(string title, string text)
 		{
-			//var notify = new Notification
-			//{
-			//    Summary = title,
-			//    Body = text,
-			//    Urgency = Urgency.Normal,
-			//    IconName = Stock.DialogInfo
-			//};
-			//notify.AttachToStatusIcon(this.trayIcon);
-			////notify.AddAction("name", "label", delegate
-			////{
-			////});
-			//notify.Show();
+			Application.Invoke(delegate
+			{
+				var notify = new Notification
+				{
+				    Summary = title,
+				    Body = text,
+				    Urgency = Urgency.Normal,
+				    IconName = Stock.DialogInfo
+				};
+				AttachToStatusIcon(notify, this.trayIcon);
+				notify.Show();
+			});
+		}
+
+		private static void AttachToStatusIcon (Notification notify, Gtk.StatusIcon status_icon)
+		{
+			Gdk.Screen screen;
+			Gdk.Rectangle rect;
+			Orientation orientation;
+			int x, y;
+			
+			if (!status_icon.GetGeometry (out screen, out rect, out orientation)) {
+			    return;
+			}
+			
+			x = rect.X + rect.Width / 2;
+			y = rect.Y + rect.Height / 2;
+			
+			notify.SetGeometryHints (screen, x, y);
 		}
 
 		public void SetNotifyIconText(string format, params object[] args)
 		{
-			this.trayIcon.Tooltip = String.Format(format, args);
+			Application.Invoke(delegate
+			{
+				this.trayIcon.Tooltip = String.Format(format, args);
+			});
 		}
 
 		public void OpenAuthentication()
 		{
-			optionsForm.OpenWithAuthenticationError();
+			Application.Invoke(delegate
+			{
+				optionsForm.OpenWithAuthenticationError();
+			});
 		}
 
 		public void Exit()
@@ -117,15 +150,21 @@ namespace LastHorizonte
 
 		public void OpenAboutForm()
 		{
-			using (var form = new AboutForm())
+			Application.Invoke(delegate
 			{
-				form.ShowDialog();
-			}
+				using (var form = new AboutForm())
+				{
+					form.ShowDialog();
+				}
+			});
 		}
 
 		public void OpenOptionsForm()
 		{
-			optionsForm.Open();
+			Application.Invoke(delegate
+			{
+				optionsForm.Open();
+			});
 		}
 
 		#endregion
@@ -198,7 +237,7 @@ namespace LastHorizonte
 			};
 			if (@params.Handler != null)
 			{
-				menuItem.Toggled += ((sender, e) =>
+				menuItem.Activated += ((sender, e) =>
 				{
 					@params.Handler(@params, new CheckedMenuItemEventArgs { Checked = ((CheckMenuItem)sender).Active });
 				});
