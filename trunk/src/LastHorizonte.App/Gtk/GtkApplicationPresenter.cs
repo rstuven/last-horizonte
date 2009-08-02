@@ -50,18 +50,17 @@ namespace LastHorizonte
 				Visible = true,
 				Tooltip = text
 			};
-			trayIcon.Activate += delegate
+			this.trayIcon.Activate += delegate
 			{
-				if (optionsForm.Visible)
-				{
-					optionsForm.Hide();
-				}
-				else
-				{
-					optionsForm.Open();
-				}
+				ShowMainMenu(items);
 			};
-			trayIcon.PopupMenu += (o, e) =>
+			this.trayIcon.PopupMenu += (o, e) =>
+				{
+				ShowMainMenu(items);
+			};
+				}
+
+		private static void ShowMainMenu(IMenuItemParams[] items)
 			{
 				var popupMenu = new Menu();
 
@@ -73,7 +72,6 @@ namespace LastHorizonte
 
 				popupMenu.Show();
 				popupMenu.Popup();
-			};
 		}
 
 		public void ShowBalloonTipInfo(string title, string text)
