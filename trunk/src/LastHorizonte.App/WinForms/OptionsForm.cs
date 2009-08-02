@@ -30,42 +30,6 @@ namespace LastHorizonte
 			this.Hide();
 		}
 
-		private void exitToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			Application.Exit();
-		}
-
-		private void activatedToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			if (activatedToolStripMenuItem.Checked)
-			{
-				Program.InitializeAndStartScrobbler(this, Program.Configuration);
-			}
-			else
-			{
-				Program.HorizonteScrobbler.Stop();
-			}
-		}
-
-		private void contextMenuStrip_Opening(object sender, CancelEventArgs e)
-		{
-			activatedToolStripMenuItem.Checked = Program.HorizonteScrobbler.IsStarted;
-			openProfileToolStripMenuItem.Enabled = Program.HorizonteScrobbler.IsInitialized;
-			var track = Program.HorizonteScrobbler.LastPlayedTrack;
-			if (track == null)
-			{
-				trackToolStripMenuItem.Visible = false;
-			}
-			else
-			{
-				var status = (track.Status == TrackStatus.Played ? "Sonó" : "Sonando");
-				trackToolStripMenuItem.Text = status + ": " + track.ToString();
-				trackToolStripMenuItem.Visible = true;
-			}
-			// Save in Tag property, as track can change in the meantime... 
-			trackToolStripMenuItem.Tag = track;
-		}
-
 		private bool accountChanged;
 
 		private void acceptButton_Click(object sender, EventArgs e)
@@ -87,8 +51,8 @@ namespace LastHorizonte
 			}
 			if (accountChanged)
 			{
-				Program.CreateHorizonteScrobbler(this);
-				Program.InitializeAndStartScrobbler(this, cfg);
+				Program.CreateHorizonteScrobbler();
+				Program.InitializeAndStartScrobbler(cfg);
 			}
 
 			cfg.RememberPassword = rememberPasswordCheckBox.Checked;
@@ -124,7 +88,7 @@ namespace LastHorizonte
 			{
 				if (activatedCheckBox.Checked)
 				{
-					Program.InitializeAndStartScrobbler(this, cfg);
+					Program.InitializeAndStartScrobbler(cfg);
 				}
 				else
 				{
@@ -193,45 +157,12 @@ namespace LastHorizonte
 
 		private void signupLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			Process.Start("http://www.lastfm.es/join");
+			Program.OpenLastFmSignup();
 		}
 
 		private void cancelButton_Click(object sender, EventArgs e)
 		{
 			this.Close();
-		}
-
-		private void optionsToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			Open();
-		}
-
-		private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			new AboutForm().ShowDialog();
-		}
-
-		private void openProfileToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			Process.Start("http://www.last.fm/user/" + Program.Configuration.Username);
-		}
-
-		private void trackLoveToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			var track = (Track)trackToolStripMenuItem.Tag;
-			Program.HorizonteScrobbler.Love(track);
-		}
-
-		private void trackBanToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			var track = (Track)trackToolStripMenuItem.Tag;
-			Program.HorizonteScrobbler.Ban(track);
-		}
-
-		private void trackPageToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			var track = (Track)trackToolStripMenuItem.Tag;
-			Process.Start(track.LastFmUrl());
 		}
 
 	}
