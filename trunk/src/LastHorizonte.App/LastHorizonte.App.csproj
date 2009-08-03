@@ -62,7 +62,7 @@
     <Compile Include="Model\CheckedMenuItemParams.cs" />
     <Compile Include="Model\IMenuItem.cs" />
     <Compile Include="Model\IMenuItemParams.cs" />
-    <Compile Include="Model\MenuItemParams.cs" />
+    <Compile Include="Model\ImageMenuItemParams.cs" />
     <Compile Include="WinForms\AboutForm.cs">
       <SubType>Form</SubType>
     </Compile>

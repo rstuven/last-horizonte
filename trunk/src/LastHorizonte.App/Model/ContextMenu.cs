@@ -29,7 +29,7 @@ namespace LastHorizonte
 						e.MenuItem.Checked = Program.HorizonteScrobbler.IsStarted;
 					}
 				},
-				new MenuItemParams
+				new ImageMenuItemParams
 				{
 					Image = Resources.music,
 					Text = "Tema",
@@ -47,42 +47,42 @@ namespace LastHorizonte
 							e.MenuItem.Visible = true;
 						}
 						// Save in Tag property, as track can change in the meantime... 
-						((MenuItemParams) sender).Tag = track;
+						((ImageMenuItemParams) sender).Tag = track;
 					},
 					Items = new[]
 					{
-						new MenuItemParams
+						new ImageMenuItemParams
 						{
 							Image = Resources.love,
 							Text = "Favorito",
 							Handler = (sender, e) =>
 							{
-								var track = (Track) ((MenuItemParams) sender).Parent.Tag;
+								var track = (Track) ((ImageMenuItemParams) sender).Parent.Tag;
 								Program.HorizonteScrobbler.Love(track);
 							}
 						},
-						new MenuItemParams
+						new ImageMenuItemParams
 						{
 							Image = Resources.ban,
 							Text = "Vetar",
 							Handler = (sender, e) =>
 							{
-								var track = (Track) ((MenuItemParams) sender).Parent.Tag;
+								var track = (Track) ((ImageMenuItemParams) sender).Parent.Tag;
 								Program.HorizonteScrobbler.Ban(track);
 							}
 						},
-						new MenuItemParams
+						new ImageMenuItemParams
 						{
 							Text = "Abrir página en Last.fm",
 							Handler = (sender, e) =>
 							{
-								var track = (Track) ((MenuItemParams) sender).Parent.Tag;
+								var track = (Track) ((ImageMenuItemParams) sender).Parent.Tag;
 								Process.Start(track.LastFmUrl());
 							}
 						}
 					}
 				},
-				new MenuItemParams
+				new ImageMenuItemParams
 				{
 					Image = Resources.profile,
 					Text = "Abrir mi perfil en Last.fm",
@@ -95,7 +95,7 @@ namespace LastHorizonte
 						e.MenuItem.Enabled = Program.HorizonteScrobbler.IsInitialized;
 					}
 				},
-				new MenuItemParams
+				new ImageMenuItemParams
 				{
 					Image = Resources.options,
 					Text = "Opciones...",
@@ -104,7 +104,7 @@ namespace LastHorizonte
 						application.OpenOptionsForm();
 					}
 				},
-				new MenuItemParams
+				new ImageMenuItemParams
 				{
 					Image = Resources.information,
 					Text = "Acerca de...",
@@ -113,11 +113,11 @@ namespace LastHorizonte
 						application.OpenAboutForm();
 					}
 				},
-				new MenuItemParams
+				new ImageMenuItemParams
 				{
 					Text = "-",
 				},
-				new MenuItemParams
+				new ImageMenuItemParams
 				{
 					Text = "Cerrar",
 					Handler = (sender, e) =>
