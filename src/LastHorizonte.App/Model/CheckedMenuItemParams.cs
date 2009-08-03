@@ -1,11 +1,9 @@
 using System;
-using System.Drawing;
 
 namespace LastHorizonte
 {
 	internal class CheckedMenuItemParams : IMenuItemParams
 	{
-		public Image Image { get; set; }
 		public string Text { get; set; }
 		public CheckedMenuItemEventHandler Handler { get; set; }
 		public OpeningHanlder OpeningHandler { get; set; }

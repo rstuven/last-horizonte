@@ -167,7 +167,7 @@ namespace LastHorizonte
 
 		#endregion
 
-		private static Widget[] GetList(IEnumerable<IMenuItemParams> items, MenuItemParams parent)
+		private static Widget[] GetList(IEnumerable<IMenuItemParams> items, ImageMenuItemParams parent)
 		{
 			var list = new List<Widget>();
 			foreach (var item in items)
@@ -177,7 +177,7 @@ namespace LastHorizonte
 					list.Add(new SeparatorMenuItem { Visible = true });
 					continue;
 				}
-				var menuitem = item as MenuItemParams;
+				var menuitem = item as ImageMenuItemParams;
 				if (menuitem != null)
 				{
 					menuitem.Parent = parent;
@@ -206,7 +206,7 @@ namespace LastHorizonte
 			return list.ToArray();
 		}
 
-		private static ImageMenuItem GetMenuItem(MenuItemParams @params)
+		private static ImageMenuItem GetMenuItem(ImageMenuItemParams @params)
 		{
 			var menuItem = new ImageMenuItem(@params.Text)
 			{

@@ -145,7 +145,7 @@ namespace LastHorizonte
 		}
 
 
-		private static ToolStripItem[] GetList(IEnumerable<IMenuItemParams> items, MenuItemParams parent)
+		private static ToolStripItem[] GetList(IEnumerable<IMenuItemParams> items, ImageMenuItemParams parent)
 		{
 			var list = new List<ToolStripItem>();
 			foreach (var item in items)
@@ -155,7 +155,7 @@ namespace LastHorizonte
 					list.Add(new ToolStripSeparator());
 					continue;
 				}
-				var menuitem = item as MenuItemParams;
+				var menuitem = item as ImageMenuItemParams;
 				if (menuitem != null)
 				{
 					menuitem.Parent = parent;
@@ -182,9 +182,8 @@ namespace LastHorizonte
 
 		private static ToolStripMenuItem GetCheckedMenuItem(CheckedMenuItemParams @params)
 		{
-			var menuItem = GetMenuItem(new MenuItemParams
+			var menuItem = GetMenuItem(new ImageMenuItemParams
 			{
-				Image = @params.Image,
 				Text = @params.Text
 			});
 			menuItem.CheckOnClick = true;
@@ -199,7 +198,7 @@ namespace LastHorizonte
 		}
 
 
-		private static ToolStripMenuItem GetMenuItem(MenuItemParams @params)
+		private static ToolStripMenuItem GetMenuItem(ImageMenuItemParams @params)
 		{
 			var menuItem = new ToolStripMenuItem
 			{
