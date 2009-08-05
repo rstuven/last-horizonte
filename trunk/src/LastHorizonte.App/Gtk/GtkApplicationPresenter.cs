@@ -29,7 +29,7 @@ namespace LastHorizonte
 			});
 		}
 
-		public void Start(HorizonteScrobbler horizonteScrobbler)
+		public void Start(RadioScrobbler radioScrobbler)
 		{
 			GLib.Timeout.Add(100, delegate
 			{
@@ -59,6 +59,11 @@ namespace LastHorizonte
 				ShowMainMenu(items);
 			};
 				}
+
+		public void ShowBalloonTipTrack(string status, Track track)
+		{
+			ShowBalloonTipInfo(status, track.ToString());
+		}
 
 		private static void ShowMainMenu(IMenuItemParams[] items)
 			{

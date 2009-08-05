@@ -10,7 +10,7 @@ namespace LastHorizonte
 		{
 			string title = null;
 			string artist = null;
-			const string album = "Radio Horizonte";
+			const string album = "";
 
 			var enable = track != null && track.Status == TrackStatus.Playing;
 			if (enable)
