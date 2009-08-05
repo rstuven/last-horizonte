@@ -1,10 +1,11 @@
 using System;
+using System.Web;
 
 namespace LastHorizonte.Core
 {
 	public enum TrackStatus
 	{
-		None,
+		Idle,
 		Playing,
 		Coming,
 		Played,
@@ -17,6 +18,11 @@ namespace LastHorizonte.Core
 		public string Title { get; set; }
 		public TrackStatus Status { get; set; }
 
+		public Track()
+		{
+			Status = TrackStatus.Idle;
+		}
+
 		public bool Equals(Track other)
 		{
 			return Artist == other.Artist && Title == other.Title && Status == other.Status;
@@ -27,11 +33,17 @@ namespace LastHorizonte.Core
 			return Artist + " - " + Title;
 		}
 
-		public string LastFmUrl()
+		public string LastFmTitleUrl()
 		{
-			var artist = Artist.Replace(" ", "+");
-			var title = Title.Replace(" ", "+");
+			var artist = HttpUtility.UrlEncode(Artist);
+			var title = HttpUtility.UrlEncode(Title);
 			return String.Format("http://www.last.fm/music/{0}/_/{1}", artist, title);
+		}
+
+		public string LastFmArtistUrl()
+		{
+			var artist = HttpUtility.UrlEncode(Artist);
+			return String.Format("http://www.last.fm/music/{0}", artist);
 		}
 
 		public Lastfm.Services.Track ToLastfmTrack(Lastfm.Services.Session session)

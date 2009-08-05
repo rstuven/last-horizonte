@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading;
+using System.Drawing;
 using System.Windows.Forms;
+using Growl.DisplayStyle;
 using LastHorizonte.Core;
+using LastHorizonte.WinForms;
 
 namespace LastHorizonte
 {
@@ -15,10 +17,23 @@ namespace LastHorizonte
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(true);
-			this.optionsForm = new OptionsForm();
+			CreateOptionsForm();
 		}
 
-		public void Start(HorizonteScrobbler horizonteScrobbler)
+		private void CreateOptionsForm()
+		{
+			this.optionsForm = new OptionsForm();
+			this.optionsForm.CreateControl();
+			this.optionsForm.StartPosition = FormStartPosition.Manual;
+			this.optionsForm.Location = new Point(-5000, -5000);
+			// Must be shown first just to get a window handle used by BeginInvoke (see notifications).
+			this.optionsForm.Show();
+			this.optionsForm.Hide();
+			var screen = Screen.FromControl(this.optionsForm);
+			this.optionsForm.Location = new Point((screen.Bounds.Width-this.optionsForm.Width)/2,(screen.Bounds.Height-this.optionsForm.Height)/2);
+		}
+
+		public void Start(RadioScrobbler radioScrobbler)
 		{
 			Application.ApplicationExit += ((sender, e) =>
 			{
@@ -26,7 +41,7 @@ namespace LastHorizonte
 				{
 					notifyIcon.Visible = false;
 				}
-				horizonteScrobbler.Stop();
+				radioScrobbler.Stop();
 			});
 
 			Application.Run();
@@ -57,35 +72,66 @@ namespace LastHorizonte
 				};
 		}
 
-		private static void CheckSingleInstance()
+		public void ShowBalloonTipTrack(string status, Track track)
 		{
-			bool createdNew;
-			var mutex = new Mutex(true, Application.ProductName + "_Instance", out createdNew);
-			if (!createdNew)
+			var notification = new Notification
 			{
-				MessageBox.Show("La aplicación ya está abierta.",
-								Application.ProductName,
-								MessageBoxButtons.OK,
-								MessageBoxIcon.Exclamation);
-				Application.Exit();
-			}
+				Title = status,
+				Description = track.ToString(),
+				UUID = Guid.NewGuid().ToString(),
+				NotificationID = Guid.NewGuid().ToString(),
+				ApplicationName = Application.ProductName,
+			};
+
+			this.optionsForm.BeginInvoke(new Action<Notification>(n =>
+		{
+				var window = GetNotificationWindow(n);
+				window.SetTrack(track);
+				window.Show();
+			}), notification);
+
+			//notifyIcon.ShowBalloonTip(0, title, text, ToolTipIcon.Info);
 		}
 
 		public void ShowBalloonTipInfo(string title, string text)
 		{
-			if (Configuration.IsRunningOnMono)
+			var notification = new Notification
 			{
-				return;
+				Title = title,
+				Description = text,
+				UUID = Guid.NewGuid().ToString(),
+				NotificationID = Guid.NewGuid().ToString(),
+				ApplicationName = Application.ProductName,
+			};
+
+			this.optionsForm.BeginInvoke(new Action<Notification>(n =>
+			{
+				var window = GetNotificationWindow(n);
+				window.Show();
+			}), notification);
+
+			//notifyIcon.ShowBalloonTip(0, title, text, ToolTipIcon.Info);
 			}
-			notifyIcon.ShowBalloonTip(0, title, text, ToolTipIcon.Info);
+
+		private MyNotificationWindow GetNotificationWindow(Notification n)
+		{
+			var window = new MyNotificationWindow();
+			window.SetNotification(n);
+			window.AfterLoad += ((sender, e) => 
+			{
+				notificationLayoutManager.Add(window);
+			});
+			window.FormClosed += ((sender1, e1) => 
+			{
+				notificationLayoutManager.Remove(window);
+			});
+			return window;
 		}
+
+		LayoutManager notificationLayoutManager = new LayoutManager(LayoutManager.AutoPositionDirection.UpLeft, 10, 10);
 
 		public void ShowBalloonTipError(string title, string text)
 		{
-			if (Configuration.IsRunningOnMono)
-			{
-				return;
-			}
 			notifyIcon.ShowBalloonTip(0, title, text, ToolTipIcon.Error);
 		}
 
@@ -105,7 +151,7 @@ namespace LastHorizonte
 			optionsForm.OpenWithAuthenticationError();
 		}
 
-		private ContextMenuStrip CreateContextMenu(IMenuItemParams[] items)
+		private static ContextMenuStrip CreateContextMenu(IMenuItemParams[] items)
 		{
 			var contextMenuStrip = new ContextMenuStrip();
 			var list = GetList(items, null);

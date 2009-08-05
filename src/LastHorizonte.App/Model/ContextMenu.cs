@@ -21,12 +21,12 @@ namespace LastHorizonte
 						}
 						else
 						{
-							Program.HorizonteScrobbler.Stop();
+							Program.RadioScrobbler.Stop();
 						}
 					},
 					OpeningHandler = (semder, e) =>
 					{
-						e.MenuItem.Checked = Program.HorizonteScrobbler.IsStarted;
+						e.MenuItem.Checked = Program.RadioScrobbler.IsStarted;
 					}
 				},
 				new ImageMenuItemParams
@@ -35,7 +35,7 @@ namespace LastHorizonte
 					Text = "Tema",
 					OpeningHandler = (sender, e)=>
 					{
-						var track = Program.HorizonteScrobbler.LastPlayedTrack;
+						var track = Program.RadioScrobbler.LastPlayedTrack;
 						if (track == null)
 						{
 							e.MenuItem.Visible = false;
@@ -58,7 +58,7 @@ namespace LastHorizonte
 							Handler = (sender, e) =>
 							{
 								var track = (Track) ((ImageMenuItemParams) sender).Parent.Tag;
-								Program.HorizonteScrobbler.Love(track);
+								Program.RadioScrobbler.Love(track);
 							}
 						},
 						new ImageMenuItemParams
@@ -68,7 +68,7 @@ namespace LastHorizonte
 							Handler = (sender, e) =>
 							{
 								var track = (Track) ((ImageMenuItemParams) sender).Parent.Tag;
-								Program.HorizonteScrobbler.Ban(track);
+								Program.RadioScrobbler.Ban(track);
 							}
 						},
 						new ImageMenuItemParams
@@ -77,7 +77,7 @@ namespace LastHorizonte
 							Handler = (sender, e) =>
 							{
 								var track = (Track) ((ImageMenuItemParams) sender).Parent.Tag;
-								Process.Start(track.LastFmUrl());
+								Process.Start(track.LastFmTitleUrl());
 							}
 						}
 					}
@@ -92,7 +92,7 @@ namespace LastHorizonte
 					},
 					OpeningHandler = (sender, e)=>
 					{
-						e.MenuItem.Enabled = Program.HorizonteScrobbler.IsInitialized;
+						e.MenuItem.Enabled = Program.RadioScrobbler.IsInitialized;
 					}
 				},
 				new ImageMenuItemParams

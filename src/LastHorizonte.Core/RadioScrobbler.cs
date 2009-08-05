@@ -14,7 +14,7 @@ using Lastfm.Services;
 
 namespace LastHorizonte.Core
 {
-	public class HorizonteScrobbler
+	public class RadioScrobbler
 	{
 		private Configuration configuration;
 		private ScrobbleManager scrobbleManager;
@@ -38,7 +38,7 @@ namespace LastHorizonte.Core
 			get { return lastPlayedTrack; }
 		}
 
-		public HorizonteScrobbler()
+		public RadioScrobbler()
 		{
 			this.worker = new BackgroundWorker();
 			worker.DoWork += worker_DoWork;
@@ -287,7 +287,7 @@ namespace LastHorizonte.Core
 			{
 				return TrackStatus.Coming;
 			}
-			return TrackStatus.None;
+			return TrackStatus.Idle;
 		}
 
 		private static string GetFeedUrl()

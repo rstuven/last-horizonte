@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Windows.Forms;
 using LastHorizonte.Core;
 
@@ -51,7 +50,7 @@ namespace LastHorizonte
 			}
 			if (accountChanged)
 			{
-				Program.CreateHorizonteScrobbler();
+				Program.CreateRadioScrobbler();
 				Program.InitializeAndStartScrobbler(cfg);
 			}
 
@@ -66,16 +65,19 @@ namespace LastHorizonte
 			{
 				try
 				{
-					var key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run");
-					if (cfg.StartOnWindowsSession)
+					var key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run");
+					if (key != null)
 					{
-						// Use app domain setup information to get launcher path
-						var domainSetup = AppDomain.CurrentDomain.SetupInformation;
-						key.SetValue(Application.ProductName, domainSetup.ApplicationBase + domainSetup.ApplicationName);
-					}
-					else
-					{
-						key.DeleteValue(Application.ProductName, false);
+						if (cfg.StartOnWindowsSession)
+						{
+							// Use app domain setup information to get launcher path
+							var domainSetup = AppDomain.CurrentDomain.SetupInformation;
+							key.SetValue(Application.ProductName, domainSetup.ApplicationBase + domainSetup.ApplicationName);
+						}
+						else
+						{
+							key.DeleteValue(Application.ProductName, false);
+						}
 					}
 				}
 				catch (Exception)
@@ -84,7 +86,7 @@ namespace LastHorizonte
 				}
 			}
 
-			if (activatedCheckBox.Checked != Program.HorizonteScrobbler.IsStarted)
+			if (activatedCheckBox.Checked != Program.RadioScrobbler.IsStarted)
 			{
 				if (activatedCheckBox.Checked)
 				{
@@ -92,7 +94,7 @@ namespace LastHorizonte
 				}
 				else
 				{
-					Program.HorizonteScrobbler.Stop();
+					Program.RadioScrobbler.Stop();
 				}
 			}
 
@@ -141,7 +143,7 @@ namespace LastHorizonte
 			startActivatedCheckBox.Checked = cfg.StartActivated;
 			startOnWindowsSessionCheckBox.Checked = cfg.StartOnWindowsSession;
 			startOnWindowsSessionCheckBox.Enabled = Configuration.IsRunningOnWindows;
-			activatedCheckBox.Checked = Program.HorizonteScrobbler.IsStarted;
+			activatedCheckBox.Checked = Program.RadioScrobbler.IsStarted;
 		}
 
 		private void usernameTextBox_TextChanged(object sender, EventArgs e)

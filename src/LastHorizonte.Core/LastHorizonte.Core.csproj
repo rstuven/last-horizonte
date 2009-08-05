@@ -39,6 +39,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -46,7 +47,7 @@
       <Link>SolutionVersion.cs</Link>
     </Compile>
     <Compile Include="Configuration.cs" />
-    <Compile Include="HorizonteScrobbler.cs" />
+    <Compile Include="RadioScrobbler.cs" />
     <Compile Include="Track.cs" />
     <Compile Include="MsnMessenger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

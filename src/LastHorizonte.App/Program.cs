@@ -13,14 +13,14 @@ namespace LastHorizonte
 	{
 		internal static readonly string ConfigurationFilename = Path.Combine(Application.UserAppDataPath, "config.xml");
 		public static Configuration Configuration;
-		private static HorizonteScrobbler horizonteScrobbler;
+		private static RadioScrobbler radioScrobbler;
 		private static IApplicationPresenter application;
 
-		public static HorizonteScrobbler HorizonteScrobbler
+		public static RadioScrobbler RadioScrobbler
 		{
 			get
 			{
-				return horizonteScrobbler;
+				return radioScrobbler;
 			}
 		}
 
@@ -48,12 +48,11 @@ namespace LastHorizonte
 
 			Configuration = Configuration.Load(ConfigurationFilename);
 
-
 			application.CreateNotifyIcon(ContextMenu.GetItems(application), "Iniciando sesión...");
-			CreateHorizonteScrobbler();
+			CreateRadioScrobbler();
 			InitializeAndStartScrobbler(Configuration);
 
-			application.Start(horizonteScrobbler);
+			application.Start(radioScrobbler);
 		}
 
 
@@ -84,7 +83,7 @@ namespace LastHorizonte
 		{
 			try
 			{
-				horizonteScrobbler.Start(configuration);
+				radioScrobbler.Start(configuration);
 			}
 			catch (AuthenticationException)
 			{
@@ -96,14 +95,14 @@ namespace LastHorizonte
 			}
 		}
 
-		internal static void CreateHorizonteScrobbler()
+		internal static void CreateRadioScrobbler()
 		{
-			if (horizonteScrobbler != null)
+			if (radioScrobbler != null)
 			{
-				horizonteScrobbler.Stop();
+				radioScrobbler.Stop();
 			}
-			horizonteScrobbler = new HorizonteScrobbler();
-			horizonteScrobbler.Playing += ((sender, eventargs) =>
+			radioScrobbler = new RadioScrobbler();
+			radioScrobbler.Playing += ((sender, eventargs) =>
 			{
 				var track = eventargs.Track;
 				if (eventargs.IsFirstTime)
@@ -113,7 +112,7 @@ namespace LastHorizonte
 						application.ShowBalloonTipError(null, track.Title);
 						application.SetNotifyIconText("{0}: {1}", "Error", track.Title);
 					}
-					else if (track.Status == TrackStatus.None)
+					else if (track.Status == TrackStatus.Idle)
 					{
 						application.SetNotifyIconText("{0} esperando a que suene la mejor música...", Application.ProductName);
 					}
@@ -122,25 +121,25 @@ namespace LastHorizonte
 						var status = (track.Status == TrackStatus.Coming ? "Luego en" : "En") + " Horizonte";
 						if (Configuration.NotifySystemTray)
 						{
-							application.ShowBalloonTipInfo(status, track.ToString());
+							application.ShowBalloonTipTrack(status, track);
 						}
 						application.SetNotifyIconText("{0}: {1}", status, track.ToString());
 					}
 				}
 			});
-			horizonteScrobbler.Loved += ((sender, eventargs) =>
+			radioScrobbler.Loved += ((sender, eventargs) =>
 			{
 				application.ShowBalloonTipInfo("Favorito", eventargs.Track.ToString());
 			});
-			horizonteScrobbler.Banned += ((sender, eventargs) => 
+			radioScrobbler.Banned += ((sender, eventargs) => 
 			{
 				application.ShowBalloonTipInfo("Vetado", eventargs.Track.ToString());
 			});
-			horizonteScrobbler.Started += ((sender, eventargs) =>
+			radioScrobbler.Started += ((sender, eventargs) =>
 			{
 				application.ShowBalloonTipInfo(Application.ProductName, "Activado");
 			});
-			horizonteScrobbler.Stopped += ((sender, eventargs) =>
+			radioScrobbler.Stopped += ((sender, eventargs) =>
 			{
 				application.ShowBalloonTipInfo(Application.ProductName, "Desactivado");
 			});
