@@ -259,7 +259,7 @@ namespace LastHorizonte.Core
 			}
 		}
 
-		private static readonly Regex CleanInvalidXmlRegex = new Regex("<!--(.*)-->\r\n", RegexOptions.Multiline | RegexOptions.Compiled);
+		private static readonly Regex CleanInvalidXmlRegex = new Regex(@"<!--(.*)-->[\r\n]?", RegexOptions.Multiline | RegexOptions.Compiled);
 
 		private static string CleanInvalidXml(string xml)
 		{

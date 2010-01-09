@@ -1,0 +1,9 @@
+<VersionConfig><AvailableVersion>1.0.12</AvailableVersion>          
+<AppFileUrl>http://last-horizonte.googlecode.com/files/last-horizonte-1.0.12-update.zip</AppFileUrl> 
+﻿<LatestChanges>
+\n
+- Resuelve cambio en codificación de archivo de estado de Radio Horizonte. (Windows y Linux)
+\n
+</LatestChanges>
+<ChangeLogUrl>http://code.google.com/p/last-horizonte</ChangeLogUrl>
+</VersionConfig>
